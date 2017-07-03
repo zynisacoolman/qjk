@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center">
+
+
+                <TextView
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="3.1"
+                    android:text="客户：" />
+
+                <EditText
+                    android:id="@+id/et_detail_name"
+                    style="@style/customer_detail_editText"
+                    android:layout_weight="3.2"
+                    android:hint="请输入名字"
+                    android:inputType="text" />
+
+                <TextView
+                    android:id="@+id/tv_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2.3"
+                    android:gravity="center"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <View style="@style/line_style" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center">
+
+                <TextView
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="3"
+                    android:text="电话：" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/tell_phone"
+                        android:layout_width="15dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/phoneicon" />
+
+                    <EditText
+                        android:id="@+id/et_detail_phone"
+                        style="@style/customer_detail_editText"
+                        android:layout_weight="1.2"
+                        android:hint="请输入电话"
+                        android:inputType="number" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/line_style" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_detail_address"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_detail_address"
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="3"
+                    android:text="地区信息：" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/location" />
+
+                    <EditText
+                        android:id="@+id/et_detail_address_xq"
+                        style="@style/customer_detail_editText"
+                        android:focusable="false"
+                        android:hint="小区信息"
+                        android:inputType="textMultiLine"
+                        android:lines="2" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/bt_toMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地图"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <View style="@style/line_style" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center">
+
+                <TextView
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="3"
+                    android:text="详细地址：" />
+
+                <EditText
+                    android:id="@+id/et_detail_address"
+                    style="@style/customer_detail_editText"
+                    android:layout_weight="1.2"
+                    android:hint="请输入地址"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <View style="@style/line_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="3"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="12dp"
+                    android:text="备注：" />
+
+                <EditText
+                    android:id="@+id/et_detail_remarks"
+                    style="@style/customer_detail_editText"
+                    android:layout_weight="1.2"
+                    android:hint="请输入备注"
+                    android:inputType="textMultiLine"
+                    android:lines="2" />
+            </LinearLayout>
+
+            <View style="@style/line_style" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="17dp"
+                android:layout_marginTop="17dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:text="活动描述：" />
+
+                <TextView
+                    android:id="@+id/tv_detail_activity"
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/text_gray_2" />
+            </LinearLayout>
+
+            <View style="@style/line_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="2"
+                    android:text="总金额：" />
+
+                <EditText
+                    android:id="@+id/et_detail_amount"
+                    style="@style/customer_money_editText"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:hint="请输入总金额"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <View style="@style/line_style" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="17dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="17dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_detail_activity_title"
+                    style="@style/customer_detail_textView"
+                    android:layout_width="wrap_content"
+                    android:text="优惠描述：" />
+
+                <TextView
+                    android:id="@+id/tv_detail_coupon"
+                    style="@style/customer_detail_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/text_gray_2" />
+            </LinearLayout>
+
+            <View style="@style/line_style" />
+
+            <LinearLayout
+                android:id="@+id/ll_paymoney"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:text="支付金额：" />
+
+                <EditText
+                    android:id="@+id/et_detail_pay_money"
+                    style="@style/customer_money_editText"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:hint="请输入支付金额"
+                    android:inputType="number"
+                    android:textColor="@color/colorPrimary" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_detail_evaluate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="17dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="17dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/customer_detail_textView"
+                    android:layout_marginLeft="15dp"
+                    android:text="评价：" />
+
+                <TextView
+                    android:id="@+id/tv_detail_evaluate"
+                    style="@style/customer_detail_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/text_gray_2" />
+
+                <GridView
+                    android:id="@+id/gv_detail_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:horizontalSpacing="14dp"
+                    android:numColumns="3"
+                    android:verticalSpacing="18dp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_detail_conserve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gary_button"
+                android:text="成单"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

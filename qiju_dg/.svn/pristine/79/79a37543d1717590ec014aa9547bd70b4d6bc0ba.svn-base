@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="328dp"
+        android:layout_height="450dp"
+        android:background="@drawable/bg_blue">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="56dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginTop="43dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/second_time_tv"
+                    android:gravity="center_horizontal"
+                    android:text="@string/second_share_text" />
+
+                <View
+                    android:layout_width="88dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:background="#fff" />
+
+                <TextView
+                    android:id="@+id/tv_sharetimes2"
+                    style="@style/second_time_tv"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lookers2"
+                    style="@style/second_time_tv"
+                    android:gravity="center"
+                    android:text="@string/second_look_text" />
+
+                <View
+                    android:layout_width="88dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:background="#fff" />
+
+                <TextView
+                    android:id="@+id/tv_lookers2"
+                    style="@style/second_time_tv"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/overorders2"
+                    style="@style/second_time_tv"
+                    android:gravity="center"
+                    android:text="@string/second_order_text" />
+
+                <View
+                    android:layout_width="88dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:background="#fff" />
+
+                <TextView
+                    android:id="@+id/tv_overorders2"
+                    style="@style/second_time_tv"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/pager_time2"
+                        style="@style/second_bottom_tv"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:gravity="center|bottom"
+                        android:text="星期五" />
+
+                    <TextView
+                        android:id="@+id/pager_times2"
+                        style="@style/second_bottom_tv"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="1"
+                        android:gravity="center|top"
+                        android:text="08月" />
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="#fff" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        style="@style/second_huizong_tv"
+                        android:gravity="center"
+                        android:text="30日汇总" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

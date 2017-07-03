@@ -1,0 +1,68 @@
+package com.qijukeji.utils;
+
+/**
+ * Created by Administrator on 2017/4/11.
+ */
+
+public class ConstantValues {
+    //ip地址
+//    private static final String HOST = "https://www.uzaiuzhai.com/";
+//        private static final String HOST = "https://qijukeji.cn/";
+    private static final String HOST = "http://192.168.1.138/";
+    //项目
+    public static final String HOST_URL = HOST + "qijukeji/";
+    private static final String HOST_STAFFID = "?staffid=";
+    //版本号查询
+    public static final String HTTP_VERSION = HOST_URL + "api/useractivity/versionnumber?type=android";
+    //查询首页意向信息
+    public static final String HTTP_INTENTION = HOST_URL + "api/useractivity/selectyxgk" + HOST_STAFFID;
+    //查询首页成单信息
+    public static final String HTTP_FINISH = HOST_URL + "api/useractivity/selectcdgk" + HOST_STAFFID;
+    //查询客户信息
+    public static final String SYS_URL = HOST_URL + "api/useractivity/search";
+    //查询优惠券信息
+//    public static final String SYS_URL_1 = HOST_URL + "Dg/Yhxx/Yhxxcx"+HOST_STAFFID;
+    //保存顾客信息
+    public static final String HTTP_SAVE_URL = HOST_URL + "api/useractivity/addcheckorder" + HOST_STAFFID;
+    //查询总金额
+    public static final String HTTP_ZJE = HOST_URL + "api/useractivity/zje" + HOST_STAFFID;
+    //查询意向订单详细信息
+    public static final String HTTP_SELECTYXDDXX = HOST_URL + "api/useractivity/selectyxddxx" + HOST_STAFFID;
+    //修改订单前查询
+//    public static final String HTTP_XG_SAVE = HOST_URL + "api/useractivity/xgddcx" + HOST_STAFFID;
+    //修改后保存
+    public static final String HTTP_XGDDCX = HOST_URL + "api/useractivity/xgddadd" + HOST_STAFFID;
+    //成单
+    public static final String HTTP_YXDDCD = HOST_URL + "api/useractivity/yxddcd" + HOST_STAFFID;
+    //查询显示评价列表
+    public static final String HTTP_SEL_EVALUATE = HOST_URL + "api/useractivity/cxplbq" + HOST_STAFFID;
+    //保存评价
+    public static final String HTTP_INS_EVALUATE = HOST_URL + "api/useractivity/bcpl" + HOST_STAFFID;
+    //注册  获取品牌    enabledcombolist
+    public static final String HTTP_REGISTER_PLTENT = HOST + "admin/tenant/enabledcombolist";
+    //注册  获取门店
+    public static final String HTTP_REGISTER_STORELIST = HOST_URL + "api/register/storelist";
+    //注册
+    public static final String HTTP_REGISTER = HOST_URL + "api/useractivity/pltenantuseradd" + HOST_STAFFID;
+    //登录
+    public static final String HTTP_LOG_IN = HOST_URL + "api/useractivity/userlogin" + HOST_STAFFID;
+    //查询全部活动
+    public static final String HTTP_SEL_ACTIVITY = HOST_URL + "api/activity/activitylist" + HOST_STAFFID;
+    //查询分享次数
+    public static final String HTTP_SHARE_TIMES = HOST_URL + "api/useractivity/sharetimes" + HOST_STAFFID;
+    //第一次核券人数
+    public static final String HTTP_FIRST_TIMES = HOST_URL + "api/useractivity/firstgokan" + HOST_STAFFID;
+    //最后一次
+    public static final String HTTP_LAST_TIMES = HOST_URL + "api/useractivity/lastgokan" + HOST_STAFFID;
+    //结单人数
+    public static final String HTTP_OVERORDER_TIMES = HOST_URL + "api/useractivity/oneselfgokan" + HOST_STAFFID;
+    //分享次数自增
+    public static final String HTTP_SHARE_ADDTIMES = HOST_URL + "api/useractivity/addshare" + HOST_STAFFID;
+    //节假日判定
+    public static final String HTTP_HOLIDAYS = "http://tool.bitefu.net/jiari/vip.php?d=";
+    //删除客户信息
+    public static final String HTTP_HIDDENORDER = HOST_URL + "api/useractivity/hiddenorder" + HOST_STAFFID;
+    //转移或共享客户
+    public static final String HTTP_SHIFTSTAFF = HOST_URL + "api/useractivity/shiftstaff" + HOST_STAFFID;
+
+}

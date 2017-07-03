@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:orientation="vertical">
+
+    <View
+        style="@style/line_style"/>
+
+    <TextView
+        android:id="@+id/tv_map_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:paddingTop="12dp"
+        android:text="TextView"
+        android:textColor="@color/black_text"
+        android:textSize="@dimen/text_font_size16" />
+
+    <TextView
+        android:id="@+id/tv_map_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@color/text_gray_2"
+        android:text="TextView"
+        android:textSize="@dimen/text_font_size12" />
+</LinearLayout>

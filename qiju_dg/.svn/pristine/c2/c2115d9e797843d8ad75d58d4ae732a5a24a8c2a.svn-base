@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/activity_title" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/center_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffeeeeee"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/popupwindow_calendar_month"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:textColor="#dcf0f0"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <com.qijukeji.utils.SignCalendar
+            android:id="@+id/popupwindow_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:clickable="false">
+
+        </com.qijukeji.utils.SignCalendar>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navigation_tab_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_aaaaaa"
+        android:orientation="horizontal"
+        android:paddingTop="0.5dp"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:id="@+id/id_news_ll"
+            style="@style/style_navigation_tab_ll">
+
+            <ImageView
+                android:id="@+id/id_news_iv"
+                style="@style/style_navigation_tab_iv"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/order_icon_gray" />
+
+            <TextView
+                android:id="@+id/id_news_tv"
+                style="@style/style_navigation_tab_tv"
+                android:layout_marginBottom="3dp"
+                android:text="订单"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_read_ll"
+            style="@style/style_navigation_tab_ll">
+
+            <ImageView
+                android:id="@+id/id_read_iv"
+                style="@style/style_navigation_tab_iv"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/statistics_icon_gray" />
+
+            <TextView
+                android:id="@+id/id_read_tv"
+                style="@style/style_navigation_tab_tv"
+                android:layout_marginBottom="3dp"
+                android:text="报表"
+                android:textColor="@color/color_aaaaaa" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_va_ll"
+            style="@style/style_navigation_tab_ll">
+            <ImageView
+                android:id="@+id/id_va_iv"
+                style="@style/style_navigation_tab_iv"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/more_icon_gray" />
+
+            <TextView
+                android:id="@+id/id_va_tv"
+                style="@style/style_navigation_tab_tv"
+                android:layout_marginBottom="3dp"
+                android:text="发现"
+                android:textColor="@color/color_aaaaaa" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
