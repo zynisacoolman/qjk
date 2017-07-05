@@ -55,4 +55,6 @@
     <string name="umeng_socialize_text_dingding_key">钉钉</string>
     <string name="umeng_socialize_text_vkontakte_key">VKontakte</string>
     <string name="umeng_socialize_text_dropbox_key">DropBox</string>
+
+    <string name="umeng_sharebutton_card">卡片</string>
 </resources>

@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,7 +45,7 @@ import butterknife.OnItemSelected;
  * Created by Administrator on 2017/6/23.
  */
 
-public class ShareOrderActivity extends AppCompatActivity {
+public class ShareOrderActivity extends FragmentActivity {
     @Bind(R.id.tv_title_name)
     TextView title;
     @Bind(R.id.select_title_show)

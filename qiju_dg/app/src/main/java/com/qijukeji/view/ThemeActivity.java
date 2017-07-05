@@ -333,15 +333,15 @@ public class ThemeActivity extends FragmentActivity implements FirstFragment.Fir
     @Override
     public void FirstFragmentBtnClick(boolean upDown) {
         if (upDown) {
-            iv_title_right.setVisibility(View.GONE);
+            iv_title_right.setVisibility(View.INVISIBLE);
             iv_title_select.setVisibility(View.GONE);
-            select_title_show.setVisibility(View.VISIBLE);
+            title.setVisibility(View.VISIBLE);
             iv_title_write.setVisibility(View.GONE);
         } else {
-//            iv_title_right.setVisibility(View.VISIBLE);
-//            iv_title_select.setVisibility(View.VISIBLE);
-//            select_title_show.setVisibility(View.INVISIBLE);
-//            iv_title_write.setVisibility(View.VISIBLE);
+            iv_title_right.setVisibility(View.VISIBLE);
+            iv_title_select.setVisibility(View.VISIBLE);
+            title.setVisibility(View.GONE);
+            iv_title_write.setVisibility(View.VISIBLE);
         }
     }
 }
