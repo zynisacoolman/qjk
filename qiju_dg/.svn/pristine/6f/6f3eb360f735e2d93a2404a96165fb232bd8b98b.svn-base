@@ -1,6 +1,7 @@
 package com.qijukeji.view;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,7 +28,6 @@ import com.qijukeji.controller.RegisterController;
 import com.qijukeji.qiju_dg.R;
 import com.qijukeji.utils.ConstantValues;
 import com.qijukeji.utils.HttpUtil;
-import com.qijukeji.utils.TimeUtil;
 import com.qijukeji.utils.Utils;
 
 import org.json.JSONArray;
@@ -88,6 +88,7 @@ public class ShareOrderActivity extends AppCompatActivity {
     private static final int SHARE_STORE = 1;
     private static final int SHARE_MOVE = 2;
     private String staffid, uuid, staffUuid;
+    ProgressDialog dia;
     private int type;
     Handler handler = new Handler() {
         @Override
@@ -121,7 +122,7 @@ public class ShareOrderActivity extends AppCompatActivity {
 
     private void toback(String data) {
         try {
-            TimeUtil.waitoneover();
+            dia.dismiss();
             JSONObject jsonObject = new JSONObject(data);
             String message = jsonObject.getString("errorMessage");
             String hasErrors = jsonObject.getString("hasErrors");
@@ -165,6 +166,7 @@ public class ShareOrderActivity extends AppCompatActivity {
         iv_title_right.setVisibility(View.INVISIBLE);
         controller = new RegisterController(this, handler);
         controller.toHttpPltext(SHARE_BRAND);
+        dia = new ProgressDialog(this);
     }
 
     private void toSetSpinner(String data) throws JSONException {
@@ -295,8 +297,9 @@ public class ShareOrderActivity extends AppCompatActivity {
             jsonObject.put("companyid", companyid);
             jsonObject.put("companyname", gsmc);
             Log.e("jsonObject", jsonObject.toString());
-            TimeUtil.waitwhile(this);
             HttpUtil.VolleyHttpPost(this, ConstantValues.HTTP_SHIFTSTAFF, staffid, jsonObject, handler, SHARE_MOVE);
+            dia.setMessage("loading....");
+            dia.show();
         } catch (JSONException e) {
             e.printStackTrace();
         }

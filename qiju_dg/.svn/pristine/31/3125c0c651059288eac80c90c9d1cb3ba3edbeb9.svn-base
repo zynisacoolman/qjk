@@ -7,8 +7,8 @@ package com.qijukeji.utils;
 public class ConstantValues {
     //ip地址
 //    private static final String HOST = "https://www.uzaiuzhai.com/";
-//    private static final String HOST = "https://qijukeji.cn/";
-    private static final String HOST = "http://192.168.1.108/";
+    private static final String HOST = "https://qijukeji.cn/";
+//        private static final String HOST = "http://192.168.1.122/";
     //项目
     public static final String HOST_URL = HOST + "qijukeji/";
     private static final String HOST_STAFFID = "?staffid=";
@@ -64,9 +64,5 @@ public class ConstantValues {
     public static final String HTTP_HIDDENORDER = HOST_URL + "api/useractivity/hiddenorder" + HOST_STAFFID;
     //转移或共享客户
     public static final String HTTP_SHIFTSTAFF = HOST_URL + "api/useractivity/shiftstaff" + HOST_STAFFID;
-    //微信Check
-    public static final String HTTP_WECHATCHECK = HOST_URL + "api/useractivity/wechatcheck" + HOST_STAFFID;
-    //微信加载
-    public static final String HTTP_WECHATINSERT = HOST_URL + "api/useractivity/wechatinsert" + HOST_STAFFID;
 
 }

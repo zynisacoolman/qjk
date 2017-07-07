@@ -144,8 +144,8 @@ public class ThemeActivity extends FragmentActivity implements FirstFragment.Fir
             case R.id.id_news_ll:
                 iv_title_back.setVisibility(View.VISIBLE);
                 iv_title_back.setImageResource(R.drawable.quit_icon);
-                iv_title_right.setVisibility(View.INVISIBLE);
-                title.setVisibility(View.VISIBLE);
+                select_title_show.setVisibility(View.VISIBLE);
+                title.setVisibility(View.GONE);
                 setTabSelection(0);
                 title.setText("订单");
                 Clockable = false;
@@ -336,13 +336,11 @@ public class ThemeActivity extends FragmentActivity implements FirstFragment.Fir
             iv_title_right.setVisibility(View.INVISIBLE);
             iv_title_select.setVisibility(View.GONE);
             title.setVisibility(View.VISIBLE);
-            select_title_show.setVisibility(View.GONE);
             iv_title_write.setVisibility(View.GONE);
         } else {
             iv_title_right.setVisibility(View.VISIBLE);
-            iv_title_select.setVisibility(View.GONE);
+            iv_title_select.setVisibility(View.VISIBLE);
             title.setVisibility(View.GONE);
-            select_title_show.setVisibility(View.INVISIBLE);
             iv_title_write.setVisibility(View.VISIBLE);
         }
     }
