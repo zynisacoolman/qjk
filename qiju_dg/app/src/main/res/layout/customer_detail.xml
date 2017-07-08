@@ -207,16 +207,18 @@
                 <TextView
                     style="@style/customer_detail_textView"
                     android:layout_marginLeft="15dp"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:text="总金额：" />
 
                 <EditText
                     android:id="@+id/et_detail_amount"
                     style="@style/customer_money_editText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:gravity="center"
+                    android:layout_weight="2"
                     android:hint="请输入总金额"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/colorPrimary" />
             </LinearLayout>
 
             <View style="@style/line_style" />
@@ -262,7 +264,8 @@
                 <EditText
                     android:id="@+id/et_detail_pay_money"
                     style="@style/customer_money_editText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="2"
                     android:gravity="center"
                     android:hint="请输入支付金额"
                     android:inputType="number"

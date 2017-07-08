@@ -7,8 +7,8 @@ package com.qijukeji.utils;
 public class ConstantValues {
     //ip地址
 //    private static final String HOST = "https://www.uzaiuzhai.com/";
-//    private static final String HOST = "https://qijukeji.cn/";
-    private static final String HOST = "http://192.168.1.108/";
+    private static final String HOST = "https://qijukeji.cn/";
+//    private static final String HOST = "http://192.168.1.108/";
     //项目
     public static final String HOST_URL = HOST + "qijukeji/";
     private static final String HOST_STAFFID = "?staffid=";

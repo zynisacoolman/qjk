@@ -33,6 +33,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:hint="请输入优惠码"
+            android:inputType="number"
             android:padding="10dp" />
 
         <Button
