@@ -164,6 +164,12 @@ public class ShareOrderActivity extends AppCompatActivity {
         select_title_show.setVisibility(View.GONE);
         iv_title_right.setVisibility(View.INVISIBLE);
         controller = new RegisterController(this, handler);
+        JSONObject json = new JSONObject();
+        try {
+            json.put("uuid",uuid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         controller.toHttpPltext(SHARE_BRAND);
     }
 
@@ -235,6 +241,7 @@ public class ShareOrderActivity extends AppCompatActivity {
             jsonA = new JSONObject(a);
             jsonA.getString("id");
             tenantUuid = jsonA.getString("id");
+            json.put("uuid", uuid);
             json.put("tenantUuid", tenantUuid);
         } catch (JSONException e) {
             e.printStackTrace();
