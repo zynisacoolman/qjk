@@ -83,11 +83,11 @@ public class MainAdapter extends BaseAdapter {
         homeAdapter = new HomeAdapter();
 //        homeAdapter.kehu_seting = (Button) view.findViewById(R.id.kehu_seting);
 //        homeAdapter.img_gift = (ImageView) view.findViewById(R.id.img_gift);
-        homeAdapter.tv_order_name = (TextView) view.findViewById(R.id.tv_order_name);
+        homeAdapter.tv_list_name = (TextView) view.findViewById(R.id.tv_list_name);
 //        homeAdapter.tv_main_phone = (TextView) view.findViewById(R.id.tv_main_phone);
 //        homeAdapter.tv_main_address = (TextView) view.findViewById(R.id.tv_main_address);
 //        homeAdapter.tv_main_time = (TextView) view.findViewById(R.id.tv_main_time);
-        homeAdapter.tv_order_name.setText(checkorder.getUserName());
+        homeAdapter.tv_list_name.setText(checkorder.getUserName());
         return view;
     }
 
@@ -97,7 +97,7 @@ public class MainAdapter extends BaseAdapter {
 
     class HomeAdapter {
         private Button bt_my_list_transaction, kehu_seting;
-        private TextView tv_order_name, tv_main_time, tv_main_phone, tv_main_address;
+        private TextView tv_list_name, tv_main_time, tv_main_phone, tv_main_address;
         private ImageView img_gift;
         private PopupWindowHelper popwindows;
         private View popView;
