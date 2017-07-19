@@ -22,8 +22,10 @@ import com.qijukeji.utils.HttpUtil;
 import com.qijukeji.utils.IntentUtil;
 import com.qijukeji.utils.Utils;
 import com.qijukeji.view.OrderSaveActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -104,23 +106,19 @@ public class PenreadActivity extends AppCompatActivity {
     private void JsonToObj(String data2) {
         String hasErrors = null;
         String errorMessage = null;
-        String errorCode = null;
         JSONObject json;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         try {
             json = new JSONObject(data2);
             hasErrors = json.getString("hasErrors");
             errorMessage = json.getString("errorMessage");
-            errorCode = json.getString("errorCode");
             if (hasErrors.equals("true")) {
-                if (errorCode.equals("200")) {
-                    builder.setTitle("温馨提示").setMessage(errorMessage);
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            finish();
-                        }
-                    }).show();
-                }
+                builder.setTitle("温馨提示").setMessage(errorMessage);
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        finish();
+                    }
+                }).show();
             } else {
                 toIntent(data2);
             }

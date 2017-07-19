@@ -1,20 +1,31 @@
 package com.qijukeji.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qijukeji.qiju_dg.R;
+import com.qijukeji.utils.ConstantValues;
+import com.qijukeji.utils.HttpUtil;
 import com.qijukeji.utils.UmengShareUtils;
 import com.qijukeji.utils.Utils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,18 +42,8 @@ import butterknife.OnClick;
  */
 
 public class ShareCardActivity extends AppCompatActivity {
-    @Bind(R.id.iv_title_back)
-    ImageView ivTitleBack;
-    @Bind(R.id.select_title_show)
-    RelativeLayout selectTitleShow;
-    @Bind(R.id.tv_title_name)
-    TextView tvTitleName;
-    @Bind(R.id.iv_title_right)
-    ImageView ivTitleRight;
     @Bind(R.id.bt_save_card)
     Button btSaveCard;
-    @Bind(R.id.bt_share_card)
-    Button btShareCard;
     @Bind(R.id.ll_card_img)
     LinearLayout llCardImg;
     @Bind(R.id.img_card_bg)
@@ -51,7 +52,26 @@ public class ShareCardActivity extends AppCompatActivity {
     TextView shareCardTitle;
     @Bind(R.id.share_card_description)
     TextView shareCardDescription;
-    private String title, description, imgcard;
+    @Bind(R.id.img_share_scan)
+    ImageView imgShareScan;
+    @Bind(R.id.ll_card_wechat)
+    ImageButton llCardWechat;
+    @Bind(R.id.ll_card_moments)
+    ImageButton llCardMoments;
+    private String title, description, imgcard, time;
+    private String staffid, staffUuid, uuid;
+    private static final int HTTP_SHARE_CARD = 1;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case HTTP_SHARE_CARD:
+                    imgShareScan.setImageBitmap((Bitmap) msg.obj);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,29 +82,36 @@ public class ShareCardActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        tvTitleName.setText("卡片分享");
-        tvTitleName.setVisibility(View.VISIBLE);
-        selectTitleShow.setVisibility(View.GONE);
-        ivTitleRight.setVisibility(View.INVISIBLE);
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
+        uuid = intent.getStringExtra("uuid");
         description = intent.getStringExtra("description");
+        time = intent.getStringExtra("time");
         imgcard = intent.getStringExtra("imgcard");
         shareCardTitle.setText(title);
-        shareCardDescription.setText(description);
+        shareCardDescription.setText(time);
         Glide.with(this)
                 .load(imgcard)
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.logo)
                 .into(imgCardBg);
+        SharedPreferences preferences = getSharedPreferences("qiju", Context.MODE_PRIVATE);
+        staffid = preferences.getString("staffid", "");
+        staffUuid = preferences.getString("staffUuid", "");
+        JSONObject json = new JSONObject();
+        try {
+            json.put("activityUuid", uuid);
+            json.put("staffUuid", staffUuid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("card", json.toString());
+        HttpUtil.VolleyHttpPost(this, ConstantValues.HTTP_CARD_SHARE, json, handler, HTTP_SHARE_CARD);
     }
 
-    @OnClick({R.id.iv_title_back, R.id.bt_save_card, R.id.bt_share_card})
+    @OnClick({R.id.bt_save_card, R.id.ll_card_wechat, R.id.ll_card_moments})
     public void CardClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_title_back:
-                finish();
-                break;
             case R.id.bt_save_card:
                 try {
                     saveBitmap(getViewBitmap());
@@ -92,8 +119,11 @@ public class ShareCardActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 break;
-            case R.id.bt_share_card:
-                UmengShareUtils.shareCard(getViewBitmap(), ShareCardActivity.this);
+            case R.id.ll_card_wechat:
+                UmengShareUtils.shareCard(getViewBitmap(), ShareCardActivity.this, SHARE_MEDIA.WEIXIN);
+                break;
+            case R.id.ll_card_moments:
+                UmengShareUtils.shareCard(getViewBitmap(), ShareCardActivity.this, SHARE_MEDIA.WEIXIN_CIRCLE);
                 break;
             default:
                 break;
@@ -103,7 +133,6 @@ public class ShareCardActivity extends AppCompatActivity {
     private Bitmap getViewBitmap() {
         int me = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         llCardImg.measure(me, me);
-        llCardImg.layout(0, 0, llCardImg.getMeasuredWidth(), llCardImg.getMeasuredHeight());
         llCardImg.buildDrawingCache();
         Bitmap bitmap = llCardImg.getDrawingCache();
         return bitmap;
@@ -129,4 +158,44 @@ public class ShareCardActivity extends AppCompatActivity {
         }
     }
 
+//    private void getHttpBitmap() {
+//        // 创建默认的httpClient实例.
+//        CloseableHttpClient httpclient = HttpClients.createDefault();
+//        // 创建httppost
+//        HttpPost httppost = new HttpPost("http://localhost:8080/myDemo/Ajax/serivceJ.action");
+//        // 创建参数队列
+//        List<namevaluepair> formparams = new ArrayList<namevaluepair>();
+//        formparams.add(new BasicNameValuePair("username", "admin"));
+//        formparams.add(new BasicNameValuePair("password", "123456"));
+//        UrlEncodedFormEntity uefEntity;
+//        try {
+//            uefEntity = new UrlEncodedFormEntity(formparams, "UTF-8");
+//            httppost.setEntity(uefEntity);
+//            System.out.println("executing request " + httppost.getURI());
+//            CloseableHttpResponse response = httpclient.execute(httppost);
+//            try {
+//                HttpEntity entity = response.getEntity();
+//                if (entity != null) {
+//                    System.out.println("--------------------------------------");
+//                    System.out.println("Response content: " + EntityUtils.toString(entity, "UTF-8"));
+//                    System.out.println("--------------------------------------");
+//                }
+//            } finally {
+//                response.close();
+//            }
+//        } catch (ClientProtocolException e) {
+//            e.printStackTrace();
+//        } catch (UnsupportedEncodingException e1) {
+//            e1.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            // 关闭连接,释放资源
+//            try {
+//                httpclient.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }

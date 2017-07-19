@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.qijukeji.qiju_dg.R;
 import com.qijukeji.utils.ConstantValues;
 import com.qijukeji.utils.HttpUtil;
-import com.qijukeji.utils.StaticField;
 import com.qijukeji.utils.Utils;
 
 import org.json.JSONException;
@@ -34,12 +33,6 @@ import butterknife.OnClick;
  */
 
 public class UpdateInfoActivity extends AppCompatActivity {
-    @Bind(R.id.iv_title_back)
-    ImageView ivTitleBack;
-    @Bind(R.id.tv_title_name)
-    TextView tvTitleName;
-    @Bind(R.id.iv_title_right)
-    ImageView ivTitleRight;
     @Bind(R.id.title_newstyle)
     LinearLayout titleNewstyle;
     @Bind(R.id.et_detail_name)
@@ -61,6 +54,12 @@ public class UpdateInfoActivity extends AppCompatActivity {
     @BindColor(R.color.gary)
     int gary;
     private static final int INTENT_KEY = 8;
+    @Bind(R.id.news_title_back)
+    ImageView newsTitleBack;
+    @Bind(R.id.news_title_name)
+    TextView newsTitleName;
+    @Bind(R.id.news_title_right)
+    ImageView newsTitleRight;
     private String staffid, staffUuid, uuid;
     private String kehuname, kehuphone, kehuxiaoqu, kehuaddress, kehuremark;
     private static final int HTTP_SAVE_INFO = 1;
@@ -88,7 +87,6 @@ public class UpdateInfoActivity extends AppCompatActivity {
                     }
                     break;
             }
-
         }
     };
 
@@ -111,16 +109,6 @@ public class UpdateInfoActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("qiju", Context.MODE_PRIVATE);
         staffid = preferences.getString("staffid", "");
         staffUuid = preferences.getString("staffUuid", "");
-        if (kehuname == null)
-            kehuname = "";
-        if (kehuphone == null)
-            kehuphone = "";
-        if (kehuxiaoqu == null)
-            kehuxiaoqu = "";
-        if (kehuaddress == null)
-            kehuaddress = "";
-        if (kehuremark == null)
-            kehuremark = "";
         etDetailName.setText(kehuname);
         etDetailPhone.setText(kehuphone);
         etDetailAddressXq.setText(kehuxiaoqu);
@@ -131,13 +119,13 @@ public class UpdateInfoActivity extends AppCompatActivity {
         etDetailAddress.setTextColor(gary);
         etDetailAddressXq.setTextColor(gary);
         etDetailRemarks.setTextColor(gary);
-        ivTitleRight.setVisibility(View.INVISIBLE);
+        newsTitleRight.setVisibility(View.INVISIBLE);
     }
 
-    @OnClick({R.id.iv_title_back, R.id.et_detail_address_xq, R.id.bt_save_info})
+    @OnClick({R.id.news_title_back, R.id.et_detail_address_xq, R.id.bt_save_info})
     public void Click(View view) {
         switch (view.getId()) {
-            case R.id.iv_title_back:
+            case R.id.news_title_back:
                 finish();
                 break;
             case R.id.et_detail_address_xq:

@@ -20,7 +20,7 @@ public class TimeUtil {
     //时间格式转化(毫秒转字符串)
     public static String getFormatedDateTime(String dateTime) {
         long time = Long.parseLong(dateTime);
-        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
         return sDateFormat.format(new Date(time));
     }
 
@@ -43,7 +43,7 @@ public class TimeUtil {
         return week;
     }
 
-    //系统时间之前7天的日期
+    //系统时间之前30天的日期
     public static String getMoon() {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(new Date());

@@ -14,21 +14,21 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="25.4dp"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:layout_marginBottom="13.4dp"
                 android:layout_marginRight="14dp">
 
                 <ImageView
                     android:id="@+id/img_list_mark"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@drawable/gift_label" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/img_list_wxpicture"
                     android:layout_width="62dp"
-                    android:layout_height="62dp"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="18dp"
                     android:layout_marginTop="19.4dp"
                     android:src="@drawable/tubiao" />
@@ -72,9 +72,16 @@
             android:background="@drawable/phone_icon" />
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray_line" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -106,7 +113,7 @@
             android:layout_alignParentRight="true">
 
             <LinearLayout
-                android:id="@+id/pop_bt_share"
+                android:id="@+id/order_bt_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -131,7 +138,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/pop_bt_move"
+                android:id="@+id/order_bt_move"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true">

@@ -79,7 +79,7 @@ public class CheckOrder {
     /**
      * 更新时间
      */
-    private Date updatedTime;
+    private String updateTime;
 
     /**
      * 优惠金额
@@ -97,6 +97,10 @@ public class CheckOrder {
      * 结束时间
      */
     private String enddateTime;
+
+    private String userHeadImageUrl;
+
+    private String justGift;
 
     public String getUuid() {
         return uuid;
@@ -218,12 +222,12 @@ public class CheckOrder {
         this.createdTime = createdTime;
     }
 
-    public Date getUpdatedTime() {
-        return updatedTime;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Double getDiscountPrice() {
@@ -248,5 +252,21 @@ public class CheckOrder {
 
     public void setEnddateTime(String enddateTime) {
         this.enddateTime = enddateTime;
+    }
+
+    public String getUserHeadImageUrl() {
+        return userHeadImageUrl;
+    }
+
+    public void setUserHeadImageUrl(String userHeadImageUrl) {
+        this.userHeadImageUrl = userHeadImageUrl;
+    }
+
+    public String getJustGift() {
+        return justGift;
+    }
+
+    public void setJustGift(String justGift) {
+        this.justGift = justGift;
     }
 }

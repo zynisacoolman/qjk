@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +21,9 @@ import com.qijukeji.qiju_dg.R;
 import com.qijukeji.utils.ConstantValues;
 import com.qijukeji.utils.HttpUtil;
 import com.qijukeji.utils.JsonToObjUtil;
+import com.qijukeji.utils.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,12 +38,7 @@ import butterknife.OnClick;
  */
 
 public class OrderNextActivity extends AppCompatActivity {
-    @Bind(R.id.iv_title_back)
-    ImageView ivTitleBack;
-    @Bind(R.id.tv_title_name)
-    TextView tvTitleName;
-    @Bind(R.id.iv_title_right)
-    ImageView ivTitleRight;
+
     @Bind(R.id.lv_zengping)
     ListView lvZengping;
     @Bind(R.id.tv_fanxian)
@@ -53,17 +51,25 @@ public class OrderNextActivity extends AppCompatActivity {
     LinearLayout titleNewstyle;
     @Bind(R.id.tv_next_totalmoney)
     TextView tvNextTotalmoney;
+    @Bind(R.id.news_title_back)
+    ImageView newsTitleBack;
+    @Bind(R.id.news_title_name)
+    TextView newsTitleName;
+    @Bind(R.id.news_title_right)
+    ImageView newsTitleRight;
     private List<UserGift> listGift;
+    private JSONArray giftlist;
     private SendgiftAdapter sendgiftAdapter;
-    private String staffid, staffUuid;
-
+    private String staffid, staffUuid, uuid;
     private static final int HTTP_OVER_ORDERINFO = 1;
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             String data = msg.obj.toString();
             switch (msg.what) {
                 case HTTP_OVER_ORDERINFO:
+                    overOrderback(data);
                     break;
             }
         }
@@ -79,6 +85,7 @@ public class OrderNextActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        newsTitleRight.setVisibility(View.INVISIBLE);
         SharedPreferences preferences = getSharedPreferences("qiju", Context.MODE_PRIVATE);
         staffid = preferences.getString("staffid", "");
         staffUuid = preferences.getString("staffUuid", "");
@@ -86,10 +93,12 @@ public class OrderNextActivity extends AppCompatActivity {
 
     private void toSetOrderInfo() {
         Intent intent = getIntent();
+        uuid = intent.getStringExtra("uuid");
         String data = intent.getStringExtra("data");
         try {
             JSONObject jsonnext = new JSONObject(data);
             JSONObject info = jsonnext.getJSONObject("data");
+            giftlist = info.getJSONArray("giftList");
             String gift = info.getString("giftList");
             tvNextTotalmoney.setText(info.getString("totalAmount"));
             tvFanxian.setText(info.getString("discountAmount") + "元");
@@ -101,23 +110,49 @@ public class OrderNextActivity extends AppCompatActivity {
         lvZengping.setAdapter(sendgiftAdapter);
     }
 
-    @OnClick({R.id.bt_backstep, R.id.bt_overorder})
+    @OnClick({R.id.news_title_back, R.id.bt_overorder, R.id.bt_backstep})
     public void Click(View view) {
         switch (view.getId()) {
+            case R.id.news_title_back:
             case R.id.bt_backstep:
                 finish();
                 break;
             case R.id.bt_overorder:
                 JSONObject json = new JSONObject();
+                String totalAmount = tvNextTotalmoney.getText().toString();
+                String discountAmount = tvFanxian.getText().toString();
                 try {
+                    json.put("uuid", uuid);
                     json.put("staffUuid", staffUuid);
+                    json.put("totalMoney", totalAmount);
+                    json.put("discountAmount", discountAmount);
+                    json.put("giftList", giftlist);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.e("order_json", json.toString());
                 HttpUtil.VolleyHttpPost(this, ConstantValues.HTTP_ORDER_FINISH + "?staffuuid=" + staffUuid + "&staffid=", staffid, json, handler, HTTP_OVER_ORDERINFO);
                 break;
             default:
                 break;
         }
+    }
+
+    private void overOrderback(String data) {
+        JSONObject jsonnext = null;
+        try {
+            jsonnext = new JSONObject(data);
+            boolean hasErrors = jsonnext.getBoolean("hasErrors");
+            String errorMessage = jsonnext.getString("errorMessage");
+            if (hasErrors) {
+                Utils.setToast(this, errorMessage);
+            } else {
+                Utils.setToast(this, "结单成功");
+                finish();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

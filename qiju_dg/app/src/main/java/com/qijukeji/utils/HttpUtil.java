@@ -1,6 +1,7 @@
 package com.qijukeji.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -21,15 +22,12 @@ import org.json.JSONObject;
 
 public class HttpUtil {
 
-    public HttpUtil() {
-        // TODO Auto-generated constructor stub
-    }
-
     /**
      * volley 访问网络
      */
     private static RequestQueue mRequestQueue;
     private static JsonObjectRequest mJsonObjectRequest;
+    private static Request request;
 
     public static void VolleyHttpPost(Context mContext, String url, String staffid, JSONObject json, Handler handler, int msgWhat) {
         url = url + staffid;
@@ -41,6 +39,28 @@ public class HttpUtil {
         mRequestQueue.add(mJsonObjectRequest);
     }
 
+    public static void VolleyHttpPost(Context mContext, String url, JSONObject json, final Handler handler, final int msgWhat) {
+        Log.e("urls", url);
+        mRequestQueue = Volley.newRequestQueue(mContext);
+        request = new JsonObjectRequest(Request.Method.POST, url, json, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Message msg = new Message();
+                msg.what = msgWhat;
+                msg.obj = response;
+                handler.sendMessage(msg);
+            }
+        }, new Response.ErrorListener() {
+            public void onErrorResponse(VolleyError error) {
+                Message msg = new Message();
+                msg.what = StaticField.MSGOGJ;
+                msg.obj = "网络请求失败";
+                handler.sendMessage(msg);
+            }
+        });
+        mRequestQueue.add(request);
+    }
+
     public static void VolleyHttpJsonArrayPost(Context mContext, String url, String staffid, JSONObject json, final Handler handler, final int msgWhat) {
         url = url + staffid;
         Log.e("urls", url);
@@ -48,7 +68,6 @@ public class HttpUtil {
         JsonRequest jr = new JsonRequest(Request.Method.POST, url, json, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-//                Log.e("returnback", response.toString());
                 Message msg = new Message();
                 msg.what = msgWhat;
                 msg.obj = response;
@@ -145,10 +164,25 @@ public class HttpUtil {
                     msg.what = msgWhat;
                     msg.obj = response;
                     handler.sendMessage(msg);
-//                    text3.setText("volley_post_JsonObjectRequest请求结果:"
-//                            + response.toString());
                 } catch (Exception e) {
-//                    text3.setText("Parse error");
+                }
+            }
+        };
+    }
+
+    private static Response.Listener<JSONArray> MyReqSuccessListener(
+            final Handler handler, final int msgWhat) {
+        return new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    Log.i("Hanjh", "volley_post_JsonObjectRequest请求结果:"
+                            + response.toString());
+                    Message msg = new Message();
+                    msg.what = msgWhat;
+                    msg.obj = response;
+                    handler.sendMessage(msg);
+                } catch (Exception e) {
                 }
             }
         };
@@ -172,36 +206,8 @@ public class HttpUtil {
                     msg.what = StaticField.MSGOGJ;
                     msg.obj = "网络请求失败";
                     handler.sendMessage(msg);
-//                    text3.setText("volley_post_JsonObjectRequest请求错误:" + error.toString());
                 }
             }
         };
-    }
-
-    public static void VolleyHttpGetRe(Context context, String url, final Handler handler, final int msgWhat) {
-
-        mRequestQueue = Volley.newRequestQueue(context);
-        JsonObjectRequest
-                mJsonObjectRequest1 = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.e("returnback", response.toString());
-                Message msg = new Message();
-                msg.what = msgWhat;
-                msg.obj = response;
-
-                handler.sendMessage(msg);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Message msg = new Message();
-                msg.what = StaticField.MSGOGJ;
-                msg.obj = "网络请求失败";
-                handler.sendMessage(msg);
-            }
-        });
-        mRequestQueue.add(mJsonObjectRequest1);
-
     }
 }

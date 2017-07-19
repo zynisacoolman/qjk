@@ -203,24 +203,20 @@ public class CaptureActivity extends Activity implements Callback {
         private void JsonToObj(String data2) {
             String hasErrors = null;
             String errorMessage = null;
-            String errorCode = null;
             JSONObject json;
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             try {
                 json = new JSONObject(data2);
                 hasErrors = json.getString("hasErrors");
                 errorMessage = json.getString("errorMessage");
-                errorCode = json.getString("errorCode");
                 int giftnum = json.length();
                 if (hasErrors.equals("true")) {
-                    if (errorCode.equals("200")) {
-                        builder.setTitle("温馨提示").setMessage(errorMessage);
-                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                finish();
-                            }
-                        }).show();
-                    }
+                    builder.setTitle("温馨提示").setMessage(errorMessage);
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                        }
+                    }).show();
                 } else {
                     if (giftnum < 4) {
                         builder.setTitle("温馨提示").setMessage("礼品券使用成功");

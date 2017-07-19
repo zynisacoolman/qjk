@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,17 +22,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.qijukeji.customView.CircleImageView;
+import com.qijukeji.adapter.SendgiftAdapter;
+import com.qijukeji.entityModel.UserGift;
 import com.qijukeji.qiju_dg.R;
 import com.qijukeji.utils.ConstantValues;
 import com.qijukeji.utils.HttpUtil;
 import com.qijukeji.utils.IntentUtil;
+import com.qijukeji.utils.JsonToObjUtil;
 import com.qijukeji.utils.PopupWindowHelper;
 import com.qijukeji.utils.StaticField;
-import com.qijukeji.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,13 +46,6 @@ import butterknife.OnClick;
  */
 
 public class OrderSaveActivity extends AppCompatActivity {
-
-    @Bind(R.id.iv_title_back)
-    ImageView ivTitleBack;
-    @Bind(R.id.tv_title_name)
-    TextView tvTitleName;
-    @Bind(R.id.iv_title_right)
-    ImageView ivTitleRight;
     @Bind(R.id.weixin_touxiang)
     ImageView weixinTouxiang;
     @Bind(R.id.tv_kehu_name)
@@ -67,10 +62,6 @@ public class OrderSaveActivity extends AppCompatActivity {
     ImageView activityImg;
     @Bind(R.id.activity_theme)
     TextView activityTheme;
-    @Bind(R.id.lv_fanxian_send)
-    ListView lvFanxianSend;
-    @Bind(R.id.ll_fanxian_send)
-    LinearLayout llFanxianSend;
     @Bind(R.id.edit_totalmoney)
     EditText editTotalmoney;
     @Bind(R.id.bt_next_page)
@@ -81,6 +72,22 @@ public class OrderSaveActivity extends AppCompatActivity {
     TextView tvFirstTotalmoney;
     @Bind(R.id.rl_money_view)
     RelativeLayout rlMoneyView;
+    @Bind(R.id.new_title_back)
+    ImageView newTitleBack;
+    @Bind(R.id.new_title_name)
+    TextView newTitleName;
+    @Bind(R.id.new_title_right)
+    ImageView newTitleRight;
+    @Bind(R.id.title_newstyle)
+    LinearLayout titleNewstyle;
+    @Bind(R.id.order_fanxian)
+    TextView orderFanxian;
+    @Bind(R.id.order_zengping)
+    ListView orderZengping;
+    @Bind(R.id.ll_order_show)
+    LinearLayout llOrderShow;
+    private SendgiftAdapter sendgiftAdapter;
+    private List<UserGift> listGift;
     private PopupWindowHelper popwindows;
     private View popView;
     private String staffid, staffUuid, uuid;
@@ -109,6 +116,7 @@ public class OrderSaveActivity extends AppCompatActivity {
                             }).show();
                         } else {
                             Bundle bundle = new Bundle();
+                            bundle.putSerializable("uuid", uuid);
                             bundle.putSerializable("data", data);
                             IntentUtil.intentToNull(OrderSaveActivity.this, OrderNextActivity.class, bundle);
                         }
@@ -151,15 +159,15 @@ public class OrderSaveActivity extends AppCompatActivity {
                     .into(weixinTouxiang);
             kehuname = info.getString("userName");
             kehuxiaoqu = info.getString("userAddressVillage");
-            kehuaddress = info.getString("useraddressunit");
+            kehuaddress = info.getString("userAddressUnit");
             kehuphone = info.getString("userPhone");
-            if (kehuname == null)
+            if (kehuname == null || kehuname.equals("null"))
                 kehuname = "";
-            if (kehuphone == null)
+            if (kehuphone == null || kehuphone.equals("null"))
                 kehuphone = "";
-            if (kehuxiaoqu == null)
+            if (kehuxiaoqu == null || kehuxiaoqu.equals("null"))
                 kehuxiaoqu = "";
-            if (kehuaddress == null)
+            if (kehuaddress == null || kehuaddress.equals("null"))
                 kehuaddress = "";
             tvKehuName.setText(kehuname);
             tvKehuAddress.setText(kehuxiaoqu + kehuaddress);
@@ -212,15 +220,15 @@ public class OrderSaveActivity extends AppCompatActivity {
             kehuxiaoqu = info.getString("userAddressVillage");
             kehuaddress = info.getString("userAddressUnit");
             kehuremark = info.getString("remark");
-            if (kehuname == null)
+            if (kehuname == null || kehuname.equals("null"))
                 kehuname = "";
-            if (kehuphone == null)
+            if (kehuphone == null || kehuphone.equals("null"))
                 kehuphone = "";
-            if (kehuxiaoqu == null)
+            if (kehuxiaoqu == null || kehuxiaoqu.equals("null"))
                 kehuxiaoqu = "";
-            if (kehuaddress == null)
+            if (kehuaddress == null || kehuaddress.equals("null"))
                 kehuaddress = "";
-            if (kehuremark == null)
+            if (kehuremark == null || kehuremark.equals("null"))
                 kehuremark = "";
             tvKehuName.setText(kehuname);
             tvKehuAddress.setText(kehuxiaoqu + kehuaddress);
@@ -233,22 +241,30 @@ public class OrderSaveActivity extends AppCompatActivity {
             activityTheme.setText(info.getString("activityName"));
             if (status == 0) {
                 rlMoneyView.setVisibility(View.GONE);
+                llOrderShow.setVisibility(View.GONE);
             } else if (status == 1) {
+                String gift = info.getString("giftList");
+                tvFirstTotalmoney.setText(info.getString("totalAmount"));
+                orderFanxian.setText(info.getString("discountAmount") + "元");
+                listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class);
                 llMoneyView.setVisibility(View.GONE);
+                llOrderShow.setVisibility(View.VISIBLE);
                 btNextPage.setVisibility(View.GONE);
+                sendgiftAdapter = new SendgiftAdapter(listGift, this);
+                orderZengping.setAdapter(sendgiftAdapter);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    @OnClick({R.id.iv_title_back, R.id.iv_title_right, R.id.img_call_kehu, R.id.bt_next_page})
+    @OnClick({R.id.new_title_back, R.id.new_title_right, R.id.img_call_kehu, R.id.bt_next_page})
     public void Click(View view) {
         switch (view.getId()) {
-            case R.id.iv_title_back:
+            case R.id.new_title_back:
                 finish();
                 break;
-            case R.id.iv_title_right:
+            case R.id.new_title_right:
                 popwindows.showAsDropDown(view);
                 break;
             case R.id.img_call_kehu:

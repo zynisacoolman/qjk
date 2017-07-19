@@ -3,16 +3,22 @@ package com.qijukeji.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qijukeji.entityModel.CheckOrder;
 import com.qijukeji.qiju_dg.R;
 import com.qijukeji.utils.ConstantValues;
@@ -81,93 +87,145 @@ public class MainAdapter extends BaseAdapter {
             view = convertView;
         }
         homeAdapter = new HomeAdapter();
-//        homeAdapter.kehu_seting = (Button) view.findViewById(R.id.kehu_seting);
-//        homeAdapter.img_gift = (ImageView) view.findViewById(R.id.img_gift);
+        homeAdapter.img_list_mark = (ImageView) view.findViewById(R.id.img_list_mark);
+        homeAdapter.img_list_wxpicture = (ImageView) view.findViewById(R.id.img_list_wxpicture);
         homeAdapter.tv_order_name = (TextView) view.findViewById(R.id.tv_order_name);
-//        homeAdapter.tv_main_phone = (TextView) view.findViewById(R.id.tv_main_phone);
-//        homeAdapter.tv_main_address = (TextView) view.findViewById(R.id.tv_main_address);
-//        homeAdapter.tv_main_time = (TextView) view.findViewById(R.id.tv_main_time);
+        homeAdapter.tv_order_address = (TextView) view.findViewById(R.id.tv_order_address);
+        homeAdapter.tv_time_label = (TextView) view.findViewById(R.id.tv_time_label);
+        homeAdapter.tv_order_time = (TextView) view.findViewById(R.id.tv_order_time);
+        homeAdapter.img_call_phone = (ImageButton) view.findViewById(R.id.img_call_phone);
+        homeAdapter.order_bt_share = (LinearLayout) view.findViewById(R.id.order_bt_share);
+        homeAdapter.order_bt_move = (LinearLayout) view.findViewById(R.id.order_bt_move);
         homeAdapter.tv_order_name.setText(checkorder.getUserName());
+        if (checkorder.getJustGift().equals("true")) {
+            homeAdapter.img_list_mark.setVisibility(View.VISIBLE);
+            homeAdapter.img_list_mark.setBackgroundResource(R.drawable.gift_label);
+        } else {
+            if (checkorder.getSource() == null || checkorder.getSource().equals("")) {
+                homeAdapter.img_list_mark.setVisibility(View.GONE);
+            } else {
+                homeAdapter.img_list_mark.setVisibility(View.VISIBLE);
+                homeAdapter.img_list_mark.setBackgroundResource(R.drawable.transfer_label);
+            }
+        }
+        if (checkorder.getStatus() == 0) {
+            homeAdapter.order_bt_move.setVisibility(View.VISIBLE);
+        } else {
+            homeAdapter.order_bt_move.setVisibility(View.GONE);
+        }
+        Glide.with(context)
+                .load(checkorder.getUserHeadImageUrl())
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
+                .into(homeAdapter.img_list_wxpicture);
+        homeAdapter.tv_order_address.setText(checkorder.getUserAddressVillage() + checkorder.getUserAddressUnit());
+        homeAdapter.tv_time_label.setText("获取时间");
+        homeAdapter.tv_order_time.setText(checkorder.getUpdateTime());
+        homeAdapter.img_call_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + checkorder.getUserPhone()));
+                context.startActivity(intent);
+            }
+        });
+        homeAdapter.order_bt_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("uuid", checkorder.getUuid());
+                bundle.putSerializable("type", 0);
+                bundle.putSerializable("staffUuid", staffUuid);
+                IntentUtil.intentToNull(context, ShareOrderActivity.class, bundle);
+            }
+        });
+        homeAdapter.order_bt_move.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("uuid", checkorder.getUuid());
+                bundle.putSerializable("type", 1);
+                bundle.putSerializable("staffUuid", staffUuid);
+                IntentUtil.intentToNull(context, ShareOrderActivity.class, bundle);
+            }
+        });
         return view;
     }
 
-    public void setData(String data) {
-        e.totEvaluate(data, homeAdapter.bt_my_list_transaction);
-    }
-
     class HomeAdapter {
-        private Button bt_my_list_transaction, kehu_seting;
-        private TextView tv_order_name, tv_main_time, tv_main_phone, tv_main_address;
-        private ImageView img_gift;
-        private PopupWindowHelper popwindows;
-        private View popView;
-        private TextView tv_share_kehu, tv_delete_kehu, tv_move_kehu;
+        private TextView tv_order_name, tv_order_address, tv_time_label, tv_order_time;
+        private ImageView img_list_mark, img_list_wxpicture;
+        private ImageButton img_call_phone;
+        private LinearLayout order_bt_share, order_bt_move;
+//        private PopupWindowHelper popwindows;
+//        private View popView;
+//        private TextView tv_share_kehu, tv_delete_kehu, tv_move_kehu;
 
         private HomeAdapter() {
-            initPop();
         }
 
-        private void initPop() {
-            popView = LayoutInflater.from(context).inflate(R.layout.popwindows, null);
-            popwindows = new PopupWindowHelper(popView);
-            tv_share_kehu = (TextView) popView.findViewById(R.id.tv_share_kehu);
-            tv_delete_kehu = (TextView) popView.findViewById(R.id.tv_delete_kehu);
-            tv_move_kehu = (TextView) popView.findViewById(R.id.tv_move_kehu);
-        }
-
-        public void tvOnClick(final String uuid) {
-            tv_share_kehu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("uuid", uuid);
-                    bundle.putSerializable("type", 0);
-                    bundle.putSerializable("staffUuid", staffUuid);
-                    IntentUtil.intentToNull(context, ShareOrderActivity.class, bundle);
-                    popwindows.dismiss();
-                }
-            });
-            tv_delete_kehu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("删除订单").setMessage("确定删除该客户信息吗？");
-                    builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    }).setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            JSONObject json = new JSONObject();
-                            try {
-                                json.put("uuid", uuid);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            HttpUtil.VolleyHttpPost(context, ConstantValues.HTTP_HIDDENORDER + "?staffuuid=" + staffUuid + "&staffid=", staffid, json, null, 1);
-                            Bundle b = new Bundle();
-                            b.putSerializable("staffid", staffid);
-                            b.putSerializable("staffUuid", staffUuid);
-                            b.putSerializable("brandid", brandid);
-                            IntentUtil.intentToNull(context, ThemeActivity.class, b);
-                        }
-                    }).setCancelable(false).show();
-                    popwindows.dismiss();
-                }
-            });
-            tv_move_kehu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("uuid", uuid);
-                    bundle.putSerializable("type", 1);
-                    bundle.putSerializable("staffUuid", staffUuid);
-                    IntentUtil.intentToNull(context, ShareOrderActivity.class, bundle);
-                    popwindows.dismiss();
-                }
-            });
-        }
+//        private void initPop() {
+//            popView = LayoutInflater.from(context).inflate(R.layout.popwindows, null);
+//            popwindows = new PopupWindowHelper(popView);
+//            tv_share_kehu = (TextView) popView.findViewById(R.id.tv_share_kehu);
+//            tv_delete_kehu = (TextView) popView.findViewById(R.id.tv_delete_kehu);
+//            tv_move_kehu = (TextView) popView.findViewById(R.id.tv_move_kehu);
+//        }
+//
+//        public void tvOnClick(final String uuid) {
+//            tv_share_kehu.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("uuid", uuid);
+//                    bundle.putSerializable("type", 0);
+//                    bundle.putSerializable("staffUuid", staffUuid);
+//                    IntentUtil.intentToNull(context, ShareOrderActivity.class, bundle);
+//                    popwindows.dismiss();
+//                }
+//            });
+//            tv_delete_kehu.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                    builder.setTitle("删除订单").setMessage("确定删除该客户信息吗？");
+//                    builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                        }
+//                    }).setNegativeButton("确定", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            JSONObject json = new JSONObject();
+//                            try {
+//                                json.put("uuid", uuid);
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                            HttpUtil.VolleyHttpPost(context, ConstantValues.HTTP_HIDDENORDER + "?staffuuid=" + staffUuid + "&staffid=", staffid, json, null, 1);
+//                            Bundle b = new Bundle();
+//                            b.putSerializable("staffid", staffid);
+//                            b.putSerializable("staffUuid", staffUuid);
+//                            b.putSerializable("brandid", brandid);
+//                            IntentUtil.intentToNull(context, ThemeActivity.class, b);
+//                        }
+//                    }).setCancelable(false).show();
+//                    popwindows.dismiss();
+//                }
+//            });
+//            tv_move_kehu.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("uuid", uuid);
+//                    bundle.putSerializable("type", 1);
+//                    bundle.putSerializable("staffUuid", staffUuid);
+//                    IntentUtil.intentToNull(context, ShareOrderActivity.class, bundle);
+//                    popwindows.dismiss();
+//                }
+//            });
+//        }
 
     }
 }

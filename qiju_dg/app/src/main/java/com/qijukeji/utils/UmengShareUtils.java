@@ -42,7 +42,7 @@ public class UmengShareUtils {
      * @param context
      * @param activity
      */
-    public static void shareActionOpen(Context context, Activity activity, String staffid, String activityid, String title, String description, String imgurl, String imgcard, String staffUuid) {
+    public static void shareActionOpen(Context context, Activity activity, String staffid, String activityid, String title, String description, String imgurl, String imgcard, String staffUuid, String uuid, String time) {
         UmengShareUtils.context = context;
         UmengShareUtils.activity = activity;
         UmengShareUtils.staffid = staffid;
@@ -52,6 +52,8 @@ public class UmengShareUtils {
         b.putSerializable("title", title);
         b.putSerializable("description", description);
         b.putSerializable("imgcard", imgcard);
+        b.putSerializable("uuid", uuid);
+        b.putSerializable("time", time);
         ShareAction shareAction = new ShareAction(activity);
         UMImage image;
         if (imgurl == null) {
@@ -64,11 +66,12 @@ public class UmengShareUtils {
         web.setThumb(image);  //缩略图
         web.setDescription(description);//描述
         shareAction
-                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE)
-                .addButton("umeng_sharebutton_card", "umeng_sharebutton_card", "tubiao", "tubiao")
+                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                .addButton("umeng_sharebutton_card", "umeng_sharebutton_card", "card_icon", "card_icon")
                 .setShareboardclickCallback(shareBoardlistener);
         ShareBoardConfig config = new ShareBoardConfig();
-        config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
+//        config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
+        config.setTitleText("用户通过您的分享成单，您将获得奖励");
         config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR);
         config.setCancelButtonVisibility(true);
         shareAction.open(config);
@@ -86,6 +89,7 @@ public class UmengShareUtils {
                     IntentUtil.intentToNull(context, ShareCardActivity.class, b);
                 }
             } else {
+                Log.e("share_media", share_media.toString());
                 new ShareAction(activity).setPlatform(share_media)
                         .withMedia(web)
                         .setCallback(umShareListener).share();
@@ -131,22 +135,18 @@ public class UmengShareUtils {
         HttpUtil.VolleyHttpPost(context, ConstantValues.HTTP_SHARE_ADDTIMES, staffid, json, null, -1);
     }
 
-    public static void shareCard(Bitmap bitmap, Activity activity) {
+    public static void shareCard(Bitmap bitmap, Activity activity, SHARE_MEDIA share_media) {
         UMImage image;
         if (bitmap == null) {
             image = new UMImage(context, R.drawable.logo);//资源文件
         } else {
             image = new UMImage(context, bitmap);
         }
+        Log.e("card", SHARE_MEDIA.WEIXIN.toString());
         ShareAction shareAction = new ShareAction(activity);
         shareAction
+                .setPlatform(share_media)
                 .withMedia(image)
-                .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE)
-                .setCallback(umShareListener);
-        ShareBoardConfig config = new ShareBoardConfig();
-        config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
-        config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR);
-        config.setCancelButtonVisibility(true);
-        shareAction.open(config);
+                .setCallback(umShareListener).share();
     }
 }

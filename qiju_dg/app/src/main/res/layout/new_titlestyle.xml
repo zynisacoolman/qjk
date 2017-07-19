@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/iv_title_back"
+        android:id="@+id/new_title_back"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingBottom="12dp"
@@ -16,7 +16,7 @@
         android:src="@drawable/back_icon" />
 
     <TextView
-        android:id="@+id/tv_title_name"
+        android:id="@+id/new_title_name"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -26,7 +26,7 @@
         android:textSize="18sp" />
 
     <ImageView
-        android:id="@+id/iv_title_right"
+        android:id="@+id/new_title_right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingBottom="12dp"

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -58,37 +59,44 @@ public class FindAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(
                     R.layout.fragment_third_item, null);
-            holder.findProgressBar = (FindProgressBar) convertView.findViewById(R.id.find_pro);
             holder.find_img = (ImageView) convertView
                     .findViewById(R.id.find_img);
             holder.find_rl = (RelativeLayout) convertView
                     .findViewById(R.id.find_rl);
             holder.find_theme = (TextView) convertView
                     .findViewById(R.id.find_theme);
+            holder.find_address = (TextView) convertView
+                    .findViewById(R.id.find_store);
             holder.find_time = (TextView) convertView
                     .findViewById(R.id.find_time);
             holder.find_money = (TextView) convertView
                     .findViewById(R.id.find_money);
+            holder.already_mark = (TextView) convertView
+                    .findViewById(R.id.already_mark);
+            holder.over_yhq = (TextView) convertView
+                    .findViewById(R.id.over_yhq);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         find_info = (ActivityEM) data.get(position);
-//        int numnow = find_info.getGetCount();
+        int numnow = find_info.getGetCount();
+        int numcheck = find_info.getCheckCount();
+        holder.already_mark.setText("报名：" + numnow + "人");
+        holder.over_yhq.setText("核券：" + numcheck + "人");
 //        int pernum = numnow / find_info.getUpperLimit();
-        holder.findProgressBar.setProgress(36, 36);
-        String startshow = TimeUtil.getFormatedDateTime(find_info.getStartShowTime());
-        String endshow = TimeUtil.getFormatedDateTime(find_info.getEndShowTime());
-        System.out.println(startshow + endshow);
+        final String startshow = TimeUtil.getFormatedDateTime(find_info.getStartShowTime());
+        final String endshow = TimeUtil.getFormatedDateTime(find_info.getEndShowTime());
         holder.find_theme.setText(find_info.getTitle());
-        holder.find_time.setText(startshow + "至" + endshow);
+        holder.find_time.setText(startshow + "-" + endshow);
         String price = "";
         if (find_info.getPrice() > 0) {
             price = find_info.getPrice() + "元";
         } else {
             price = "免费";
         }
-        holder.find_money.setText(price + " " + find_info.getAddress());
+        holder.find_money.setText(price);
+        holder.find_address.setText("适用" + find_info.getAddress());
         Glide.with(context)
                 .load(find_info.getShareImage())
                 .placeholder(R.drawable.logo)
@@ -114,7 +122,7 @@ public class FindAdapter extends BaseAdapter {
                 } else {
                     int id = position;
                     find_info = (ActivityEM) data.get(id);
-                    UmengShareUtils.shareActionOpen(context, activity, staffid, find_info.getUuid(), find_info.getTitle(), find_info.getDescription(), find_info.getShareImage(), find_info.getCoverImage(), staffUuid);
+                    UmengShareUtils.shareActionOpen(context, activity, staffid, find_info.getUuid(), find_info.getTitle(), find_info.getDescription(), find_info.getShareImage(), find_info.getCoverImage(), staffUuid, find_info.getUuid(), startshow + "-" + endshow);
                 }
             }
         });
@@ -123,8 +131,8 @@ public class FindAdapter extends BaseAdapter {
 
     class ViewHolder {
         private ImageView find_img;
-        private TextView find_theme, find_time, find_money;
-        private FindProgressBar findProgressBar;
+        private TextView find_theme, find_address, find_time, find_money;
+        private TextView already_mark, over_yhq;
         private RelativeLayout find_rl;
     }
 

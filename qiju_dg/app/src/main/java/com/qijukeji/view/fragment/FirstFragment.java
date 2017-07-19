@@ -3,6 +3,7 @@ package com.qijukeji.view.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -52,8 +53,6 @@ import static com.qijukeji.utils.StaticField.key2;
 
 public class FirstFragment extends Fragment {
     private static final String TAG = FirstFragment.class.getSimpleName();
-    private static final int HTTP = 1;
-    private static final int HTTP_1 = 2;
     private static final int HTTP_INTENTION_ONE = 3;//意向返回值
     private static final int HTTP_INTENTION = 4;//意向返回值
     private static final int HTTP_FINISH_ONE = 5;//成单返回值
@@ -142,6 +141,14 @@ public class FirstFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        page1 = 0;
+        page2 = 0;
+        initview();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
@@ -153,31 +160,13 @@ public class FirstFragment extends Fragment {
         public void handleMessage(Message msg) {
             String data = msg.obj.toString();
             switch (msg.what) {
-                case HTTP:
-                    break;
-                case HTTP_1:
-                    break;
                 case HTTP_INTENTION_ONE:
-                    if (!data.equals("[]")) {
-                        img_nodata.setVisibility(View.GONE);
-                        order_ll.setBackgroundResource(R.color.white);
-                    } else {
-                        img_nodata.setVisibility(View.VISIBLE);
-                        order_ll.setBackgroundResource(R.color.gary_button);
-                    }
                     analysisJsonArrayYx(data, CheckOrder.class);
                     break;
                 case HTTP_INTENTION:
                     analysisJsonArrayYxs(data, CheckOrder.class);
                     break;
                 case HTTP_FINISH_ONE:
-                    if (!data.equals("[]")) {
-                        img_nodata.setVisibility(View.GONE);
-                        order_ll.setBackgroundResource(R.color.white);
-                    } else {
-                        img_nodata.setVisibility(View.VISIBLE);
-                        order_ll.setBackgroundResource(R.color.gary_button);
-                    }
                     analysisJsonArrayCd(data, CheckOrder.class);
                     break;
                 case HTTP_FINISH:
@@ -190,7 +179,6 @@ public class FirstFragment extends Fragment {
                     toEvaluate(data);
                     break;
                 case HTTP_SEL_EVALUATE:
-                    mainAdapter.setData(data);
                     break;
                 default:
                     break;
@@ -223,6 +211,13 @@ public class FirstFragment extends Fragment {
         try {
             JSONObject jsons = new JSONObject(data);
             String kehulist = jsons.getString("list");
+            if (kehulist.equals("[]")) {
+                img_nodata.setVisibility(View.VISIBLE);
+                order_ll.setBackgroundResource(R.color.gary_button);
+            } else {
+                img_nodata.setVisibility(View.GONE);
+                order_ll.setBackgroundResource(R.color.white);
+            }
             List<Object> listObj = JsonToObjUtil.jsonArrayToListObj(kehulist, text);
             setAdapter(listObj);
         } catch (JSONException e1) {
@@ -232,17 +227,17 @@ public class FirstFragment extends Fragment {
 
     private void analysisJsonArrayYxs(String data, Class<?> text) {
         onLoad();
-        if (data.equals("[]")) {
-            page1--;
-        } else {
-            try {
-                JSONObject jsons = new JSONObject(data);
-                String kehulist = jsons.getString("list");
+        try {
+            JSONObject jsons = new JSONObject(data);
+            String kehulist = jsons.getString("list");
+            if (kehulist.equals("[]")) {
+                page1--;
+            } else {
                 List<Object> listObj = JsonToObjUtil.jsonArrayToListObj(kehulist, text);
                 setAdapter(listObj);
-            } catch (JSONException e1) {
-                e1.printStackTrace();
             }
+        } catch (JSONException e1) {
+            e1.printStackTrace();
         }
     }
 
@@ -250,6 +245,13 @@ public class FirstFragment extends Fragment {
         try {
             JSONObject jsons = new JSONObject(data);
             String kehulist = jsons.getString("list");
+            if (kehulist.equals("[]")) {
+                img_nodata.setVisibility(View.VISIBLE);
+                order_ll.setBackgroundResource(R.color.gary_button);
+            } else {
+                img_nodata.setVisibility(View.GONE);
+                order_ll.setBackgroundResource(R.color.white);
+            }
             List<Object> listObj = JsonToObjUtil.jsonArrayToListObj(kehulist, text);
             setAdapter(listObj);
         } catch (JSONException e1) {
@@ -259,17 +261,17 @@ public class FirstFragment extends Fragment {
 
     private void analysisJsonArrayCds(String data, Class<?> text) {
         onLoad();
-        if (data.equals("[]")) {
-            page2--;
-        } else {
-            try {
-                JSONObject jsons = new JSONObject(data);
-                String kehulist = jsons.getString("list");
+        try {
+            JSONObject jsons = new JSONObject(data);
+            String kehulist = jsons.getString("list");
+            if (kehulist.equals("[]")) {
+                page2--;
+            } else {
                 List<Object> listObj = JsonToObjUtil.jsonArrayToListObj(kehulist, text);
                 setAdapter(listObj);
-            } catch (JSONException e1) {
-                e1.printStackTrace();
             }
+        } catch (JSONException e1) {
+            e1.printStackTrace();
         }
     }
 
@@ -434,7 +436,7 @@ public class FirstFragment extends Fragment {
     }
 
     private void lineAnimation(ImageView img_view) {
-        Animation animation = new TranslateAnimation(0, 0, -35, 18);
+        Animation animation = new TranslateAnimation(0, 0, -45, 25);
         animation.setDuration(2000);//设置动画持续时间
         animation.setRepeatMode(Animation.RESTART);//重复模式
         animation.setRepeatCount(Animation.INFINITE);//设置次数

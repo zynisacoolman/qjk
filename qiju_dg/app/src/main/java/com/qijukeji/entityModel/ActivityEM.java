@@ -120,6 +120,7 @@ public class ActivityEM {
      * 获取次数
      */
     private Integer getCount = 0;
+    private Integer checkCount = 0;
 
 
     /**
@@ -150,8 +151,13 @@ public class ActivityEM {
      */
     private String updatedTime;
 
+    public Integer getCheckCount() {
+        return checkCount;
+    }
 
-
+    public void setCheckCount(Integer checkCount) {
+        this.checkCount = checkCount;
+    }
 
     public String getUuid() {
         return uuid;
