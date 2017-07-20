@@ -2,7 +2,6 @@ package com.qijukeji.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -14,23 +13,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2017/4/10.
@@ -132,6 +116,7 @@ public class HttpUtil {
                 mJsonObjectRequest1 = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                Log.e("returnback", response.toString());
                 Message msg = new Message();
                 msg.what = msgWhat;
                 msg.obj = response;
@@ -185,6 +170,24 @@ public class HttpUtil {
         };
     }
 
+    private static Response.Listener<JSONArray> MyReqSuccessListener(
+            final Handler handler, final int msgWhat) {
+        return new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    Log.i("Hanjh", "volley_post_JsonObjectRequest请求结果:"
+                            + response.toString());
+                    Message msg = new Message();
+                    msg.what = msgWhat;
+                    msg.obj = response;
+                    handler.sendMessage(msg);
+                } catch (Exception e) {
+                }
+            }
+        };
+    }
+
     /**
      * 返回失败
      *
@@ -207,37 +210,4 @@ public class HttpUtil {
             }
         };
     }
-
-    public static Bitmap HttpClientPost(String url, String uuid, String staffUuid) {
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost(url);
-        //设置传入的数据
-        String params = "{activityUuid:'" + uuid + "',staffUuid:'" + staffUuid + "'}";
-        Log.e("params", params);
-        Log.e("url", url);
-        InputStream is = null;
-        try {
-            //设置传递的参数格式
-            post.setEntity(new StringEntity(params, "UTF-8"));
-            post.setHeader("Content-Type", "application/json");
-            //执行get方法获得服务器返回的所有数据
-            HttpResponse response = client.execute(post);
-            //HttpClient获得服务器返回的表头。
-            StatusLine statusLine = response.getStatusLine();
-            //获得状态码
-            int code = statusLine.getStatusCode();
-            Log.e("code", code + "");
-            if (code == HttpURLConnection.HTTP_OK) {
-                //得到数据的实体。
-                HttpEntity entity = response.getEntity();
-                //得到数据的输入流。
-                is = entity.getContent();
-                Log.e("scanimg", is.toString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return BitmapFactory.decodeStream(is);
-    }
-
 }

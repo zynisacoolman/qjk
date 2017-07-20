@@ -60,7 +60,6 @@ public class ThirdFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String data = msg.obj.toString();
-            Log.e("activity",data);
             switch (msg.what) {
                 case FIND_ACTIVITY:
                     analysisJsonArrayFind(data, ActivityEM.class);

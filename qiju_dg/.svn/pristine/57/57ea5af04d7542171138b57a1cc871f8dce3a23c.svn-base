@@ -1,13 +1,18 @@
 package com.qijukeji.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,9 +21,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qijukeji.entityModel.CheckOrder;
 import com.qijukeji.qiju_dg.R;
+import com.qijukeji.utils.ConstantValues;
 import com.qijukeji.utils.EvaluateUtils;
+import com.qijukeji.utils.HttpUtil;
 import com.qijukeji.utils.IntentUtil;
+import com.qijukeji.utils.PopupWindowHelper;
 import com.qijukeji.view.ShareOrderActivity;
+import com.qijukeji.view.ThemeActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 /**
