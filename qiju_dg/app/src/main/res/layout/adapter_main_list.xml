@@ -25,7 +25,7 @@
                     android:layout_height="32dp"
                     android:visibility="gone" />
 
-                <ImageView
+                <com.qijukeji.customView.CircleImageView
                     android:id="@+id/img_list_wxpicture"
                     android:layout_width="62dp"
                     android:layout_height="match_parent"

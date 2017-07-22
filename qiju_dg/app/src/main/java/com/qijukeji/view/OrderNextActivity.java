@@ -61,6 +61,7 @@ public class OrderNextActivity extends AppCompatActivity {
     private JSONArray giftlist;
     private SendgiftAdapter sendgiftAdapter;
     private String staffid, staffUuid, uuid;
+    private String discountAmount;
     private static final int HTTP_OVER_ORDERINFO = 1;
 
     Handler handler = new Handler() {
@@ -101,7 +102,8 @@ public class OrderNextActivity extends AppCompatActivity {
             giftlist = info.getJSONArray("giftList");
             String gift = info.getString("giftList");
             tvNextTotalmoney.setText(info.getString("totalAmount"));
-            tvFanxian.setText(info.getString("discountAmount") + "元");
+            discountAmount = info.getString("discountAmount");
+            tvFanxian.setText(discountAmount + "元");
             listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -120,7 +122,6 @@ public class OrderNextActivity extends AppCompatActivity {
             case R.id.bt_overorder:
                 JSONObject json = new JSONObject();
                 String totalAmount = tvNextTotalmoney.getText().toString();
-                String discountAmount = tvFanxian.getText().toString();
                 try {
                     json.put("uuid", uuid);
                     json.put("staffUuid", staffUuid);

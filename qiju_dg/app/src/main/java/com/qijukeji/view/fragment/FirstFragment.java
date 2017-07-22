@@ -124,22 +124,6 @@ public class FirstFragment extends Fragment {
         this.context = activity;
     }
 
-    private boolean isGetData = false;
-
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        //   进入当前Fragment
-        if (enter && !isGetData) {
-            isGetData = true;
-            page1 = 0;
-            page2 = 0;
-            initview();
-        } else {
-            isGetData = false;
-        }
-        return super.onCreateAnimation(transit, enter, nextAnim);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -369,6 +353,7 @@ public class FirstFragment extends Fragment {
                 bundle.putSerializable(StaticField.KEY, key2);
                 bundle.putSerializable("uuid", c.getUuid());
                 bundle.putSerializable("source", c.getSource());
+                bundle.putSerializable("isGift", c.getJustGift());
                 IntentUtil.intentToNull(context, OrderSaveActivity.class, bundle);
             }
         });

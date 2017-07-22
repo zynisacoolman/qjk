@@ -15,7 +15,7 @@
 
             <include layout="@layout/new_titlestyle" />
 
-            <ImageView
+            <com.qijukeji.customView.CircleImageView
                 android:id="@+id/weixin_touxiang"
                 android:layout_width="62dp"
                 android:layout_height="62dp"
@@ -123,6 +123,7 @@
             android:visibility="gone">
 
             <LinearLayout
+                android:id="@+id/ll_fanxian_show"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
@@ -143,7 +144,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:text="返现200"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 

@@ -9,6 +9,7 @@ public class ActivityEM {
 
     /**
      * 唯一ID
+     *
      * @return
      */
     private String uuid;
@@ -150,6 +151,16 @@ public class ActivityEM {
      * 更新时间
      */
     private String updatedTime;
+
+    private String shareReward;
+
+    public String getShareReward() {
+        return shareReward;
+    }
+
+    public void setShareReward(String shareReward) {
+        this.shareReward = shareReward;
+    }
 
     public Integer getCheckCount() {
         return checkCount;

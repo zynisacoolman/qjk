@@ -73,6 +73,8 @@ public class FindAdapter extends BaseAdapter {
                     .findViewById(R.id.find_money);
             holder.already_mark = (TextView) convertView
                     .findViewById(R.id.already_mark);
+            holder.tv_share_price = (TextView) convertView
+                    .findViewById(R.id.tv_share_price);
             holder.over_yhq = (TextView) convertView
                     .findViewById(R.id.over_yhq);
             convertView.setTag(holder);
@@ -96,6 +98,7 @@ public class FindAdapter extends BaseAdapter {
             price = "免费";
         }
         holder.find_money.setText(price);
+        holder.tv_share_price.setText(find_info.getShareReward());
         holder.find_address.setText("适用" + find_info.getAddress());
         Glide.with(context)
                 .load(find_info.getShareImage())
@@ -122,7 +125,7 @@ public class FindAdapter extends BaseAdapter {
                 } else {
                     int id = position;
                     find_info = (ActivityEM) data.get(id);
-                    UmengShareUtils.shareActionOpen(context, activity, staffid, find_info.getUuid(), find_info.getTitle(), find_info.getDescription(), find_info.getShareImage(), find_info.getCoverImage(), staffUuid, find_info.getUuid(), startshow + "-" + endshow);
+                    UmengShareUtils.shareActionOpen(context, activity, staffid, find_info.getUuid(), find_info.getTitle(), find_info.getDescription(), find_info.getShareImage(), find_info.getCoverImage(), staffUuid, find_info.getUuid(), find_info.getShareReward(), startshow + "-" + endshow);
                 }
             }
         });
@@ -132,7 +135,7 @@ public class FindAdapter extends BaseAdapter {
     class ViewHolder {
         private ImageView find_img;
         private TextView find_theme, find_address, find_time, find_money;
-        private TextView already_mark, over_yhq;
+        private TextView already_mark, over_yhq, tv_share_price;
         private RelativeLayout find_rl;
     }
 

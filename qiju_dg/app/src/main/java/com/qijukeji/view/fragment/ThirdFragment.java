@@ -108,6 +108,12 @@ public class ThirdFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        HttpUtil.VolleyHttpGet(context, ConstantValues.HTTP_WECHATCHECK + staffid + "&staffUuid=" + staffUuid, handler, FIND_WEXINCHECK);
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.context = activity;

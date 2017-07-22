@@ -42,7 +42,7 @@ public class UmengShareUtils {
      * @param context
      * @param activity
      */
-    public static void shareActionOpen(Context context, Activity activity, String staffid, String activityid, String title, String description, String imgurl, String imgcard, String staffUuid, String uuid, String time) {
+    public static void shareActionOpen(Context context, Activity activity, String staffid, String activityid, String title, String description, String imgurl, String imgcard, String staffUuid, String uuid, String shareReward, String time) {
         UmengShareUtils.context = context;
         UmengShareUtils.activity = activity;
         UmengShareUtils.staffid = staffid;
@@ -71,7 +71,7 @@ public class UmengShareUtils {
                 .setShareboardclickCallback(shareBoardlistener);
         ShareBoardConfig config = new ShareBoardConfig();
 //        config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
-        config.setTitleText("用户通过您的分享成单，您将获得奖励");
+        config.setTitleText("用户通过您的分享成单，您将获得"+shareReward+"元奖励");
         config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR);
         config.setCancelButtonVisibility(true);
         shareAction.open(config);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import com.qijukeji.utils.IntentUtil;
 import com.qijukeji.utils.JsonToObjUtil;
 import com.qijukeji.utils.PopupWindowHelper;
 import com.qijukeji.utils.StaticField;
+import com.qijukeji.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -86,14 +88,28 @@ public class OrderSaveActivity extends AppCompatActivity {
     ListView orderZengping;
     @Bind(R.id.ll_order_show)
     LinearLayout llOrderShow;
+    @Bind(R.id.ll_fanxian_show)
+    LinearLayout llFanxianShow;
     private SendgiftAdapter sendgiftAdapter;
     private List<UserGift> listGift;
     private PopupWindowHelper popwindows;
     private View popView;
-    private String staffid, staffUuid, uuid;
+    private String staffid, staffUuid, uuid, isGift;
     private String kehuname, kehuphone, kehuxiaoqu, kehuaddress, kehuremark;
+    private Bitmap bitmap;
     private static final int HTTP_SELECT_NEXT = 1;
     private static final int HTTP_SELECT_YXCD = 2;
+    Handler handlers = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    weixinTouxiang.setImageBitmap(bitmap);
+                    break;
+            }
+        }
+    };
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -127,6 +143,8 @@ public class OrderSaveActivity extends AppCompatActivity {
                 case HTTP_SELECT_YXCD:
                     getOrderinfo(data);
                     break;
+                default:
+                    break;
             }
         }
     };
@@ -150,13 +168,19 @@ public class OrderSaveActivity extends AppCompatActivity {
         String data = intent.getStringExtra("data");
         try {
             JSONObject json = new JSONObject(data);
-            JSONObject info = json.getJSONObject("data");
+            final JSONObject info = json.getJSONObject("data");
             uuid = info.getString("checkOrderUuid");
-            Glide.with(this)
-                    .load(info.getString("userHeadImageUrl"))
-                    .placeholder(R.drawable.tubiao)
-                    .error(R.drawable.tubiao)
-                    .into(weixinTouxiang);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        bitmap = Utils.returnBitmap(info.getString("userHeadImageUrl"));
+                        handlers.sendEmptyMessage(0);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
             kehuname = info.getString("userName");
             kehuxiaoqu = info.getString("userAddressVillage");
             kehuaddress = info.getString("userAddressUnit");
@@ -186,6 +210,7 @@ public class OrderSaveActivity extends AppCompatActivity {
     private void initView() {
         Intent intent = getIntent();
         uuid = intent.getStringExtra("uuid");
+        isGift = intent.getStringExtra("isGift");
         int key = intent.getIntExtra(StaticField.KEY, 0);
         SharedPreferences preferences = getSharedPreferences("qiju", Context.MODE_PRIVATE);
         staffid = preferences.getString("staffid", "");
@@ -207,14 +232,20 @@ public class OrderSaveActivity extends AppCompatActivity {
     private void getOrderinfo(String data) {
         try {
             JSONObject json = new JSONObject(data);
-            JSONObject info = json.getJSONObject("data");
+            final JSONObject info = json.getJSONObject("data");
             uuid = info.getString("checkOrderUuid");
             int status = info.getInt("checkOrderStatus");
-            Glide.with(this)
-                    .load(info.getString("userHeadImageUrl"))
-                    .placeholder(R.drawable.tubiao)
-                    .error(R.drawable.tubiao)
-                    .into(weixinTouxiang);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        bitmap = Utils.returnBitmap(info.getString("userHeadImageUrl"));
+                        handlers.sendEmptyMessage(0);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
             kehuname = info.getString("userName");
             kehuphone = info.getString("userPhone");
             kehuxiaoqu = info.getString("userAddressVillage");
@@ -233,19 +264,25 @@ public class OrderSaveActivity extends AppCompatActivity {
             tvKehuName.setText(kehuname);
             tvKehuAddress.setText(kehuxiaoqu + kehuaddress);
             tvKehuPhone.setText(kehuphone);
-            Glide.with(this)
-                    .load(info.getString("activityShareImage"))
-                    .placeholder(R.drawable.tubiao)
-                    .error(R.drawable.tubiao)
-                    .into(activityImg);
-            activityTheme.setText(info.getString("activityName"));
+            if (isGift.equals("false")) {
+                Glide.with(this)
+                        .load(info.getString("activityShareImage"))
+                        .placeholder(R.drawable.tubiao)
+                        .error(R.drawable.tubiao)
+                        .into(activityImg);
+                activityTheme.setText(info.getString("activityName"));
+            }
             if (status == 0) {
                 rlMoneyView.setVisibility(View.GONE);
                 llOrderShow.setVisibility(View.GONE);
             } else if (status == 1) {
                 String gift = info.getString("giftList");
-                tvFirstTotalmoney.setText(info.getString("totalAmount"));
-                orderFanxian.setText(info.getString("discountAmount") + "元");
+                if (isGift.equals("false")) {
+                    tvFirstTotalmoney.setText(info.getString("totalAmount"));
+                    orderFanxian.setText(info.getString("discountAmount") + "元");
+                } else {
+                    llFanxianShow.setVisibility(View.GONE);
+                }
                 listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class);
                 llMoneyView.setVisibility(View.GONE);
                 llOrderShow.setVisibility(View.VISIBLE);

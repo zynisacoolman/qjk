@@ -2,9 +2,11 @@ package com.qijukeji.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,7 +20,9 @@ import com.qijukeji.entityModel.CheckOrder;
 import com.qijukeji.qiju_dg.R;
 import com.qijukeji.utils.EvaluateUtils;
 import com.qijukeji.utils.IntentUtil;
+import com.qijukeji.utils.Utils;
 import com.qijukeji.view.ShareOrderActivity;
+
 import java.util.List;
 
 /**
@@ -34,6 +38,19 @@ public class MainAdapter extends BaseAdapter {
     private Handler handler;
     private EvaluateUtils e;
     HomeAdapter homeAdapter;
+    Bitmap bitmap = null;
+
+    Handler handlers = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    homeAdapter.img_list_wxpicture.setImageBitmap(bitmap);
+                    break;
+            }
+        }
+    };
 
     public MainAdapter(List<Object> list, Context context, int type, String staffid, String staffUuid, String brandid, Handler handler, EvaluateUtils e) {
         this.list = list;
@@ -100,11 +117,13 @@ public class MainAdapter extends BaseAdapter {
         } else {
             homeAdapter.order_bt_move.setVisibility(View.GONE);
         }
-        Glide.with(context)
-                .load(checkorder.getUserHeadImageUrl())
-                .placeholder(R.drawable.logo)
-                .error(R.drawable.logo)
-                .into(homeAdapter.img_list_wxpicture);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                bitmap = Utils.returnBitmap(checkorder.getUserHeadImageUrl());
+                handlers.sendEmptyMessage(0);
+            }
+        }).start();
         homeAdapter.tv_order_address.setText(checkorder.getUserAddressVillage() + checkorder.getUserAddressUnit());
         homeAdapter.tv_time_label.setText("获取时间");
         homeAdapter.tv_order_time.setText(checkorder.getUpdateTime());
