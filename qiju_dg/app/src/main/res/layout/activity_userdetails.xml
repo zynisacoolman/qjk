@@ -185,7 +185,8 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="总金额"
-                    android:inputType="number"
+                    android:gravity="right"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/colorPrimary"
                     android:textSize="32sp" />
 
