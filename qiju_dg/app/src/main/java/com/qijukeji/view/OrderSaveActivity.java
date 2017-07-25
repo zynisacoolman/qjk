@@ -90,6 +90,12 @@ public class OrderSaveActivity extends AppCompatActivity {
     LinearLayout llOrderShow;
     @Bind(R.id.ll_fanxian_show)
     LinearLayout llFanxianShow;
+    @Bind(R.id.new_title_edit)
+    ImageView newTitleEdit;
+    @Bind(R.id.new_title_share)
+    ImageView newTitleShare;
+    @Bind(R.id.ll_activity_show)
+    LinearLayout llActivityShow;
     private SendgiftAdapter sendgiftAdapter;
     private List<UserGift> listGift;
     private PopupWindowHelper popwindows;
@@ -278,15 +284,21 @@ public class OrderSaveActivity extends AppCompatActivity {
             } else if (status == 1) {
                 String gift = info.getString("giftList");
                 if (isGift.equals("false")) {
+                    newTitleShare.setVisibility(View.VISIBLE);
                     tvFirstTotalmoney.setText(info.getString("totalAmount"));
                     orderFanxian.setText(info.getString("discountAmount") + "元");
                 } else {
                     llFanxianShow.setVisibility(View.GONE);
+                    newTitleShare.setVisibility(View.GONE);
+                    llActivityShow.setVisibility(View.GONE);
                 }
                 listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class);
                 llMoneyView.setVisibility(View.GONE);
+                newTitleEdit.setVisibility(View.VISIBLE);
+                newTitleRight.setVisibility(View.GONE);
                 llOrderShow.setVisibility(View.VISIBLE);
                 btNextPage.setVisibility(View.GONE);
+                rlMoneyView.setVisibility(View.VISIBLE);
                 sendgiftAdapter = new SendgiftAdapter(listGift, this);
                 orderZengping.setAdapter(sendgiftAdapter);
             }
@@ -295,7 +307,7 @@ public class OrderSaveActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.new_title_back, R.id.new_title_right, R.id.img_call_kehu, R.id.bt_next_page})
+    @OnClick({R.id.new_title_back, R.id.new_title_right, R.id.img_call_kehu, R.id.bt_next_page, R.id.new_title_edit, R.id.new_title_share})
     public void Click(View view) {
         switch (view.getId()) {
             case R.id.new_title_back:
@@ -322,6 +334,23 @@ public class OrderSaveActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 HttpUtil.VolleyHttpPost(this, ConstantValues.HTTP_CHECKORDER_NEXT + "?staffuuid=" + staffUuid + "&staffid=", staffid, json, handler, HTTP_SELECT_NEXT);
+                break;
+            case R.id.new_title_edit:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("kehuname", kehuname);
+                bundle.putSerializable("kehuphone", kehuphone);
+                bundle.putSerializable("kehuxiaoqu", kehuxiaoqu);
+                bundle.putSerializable("kehuaddress", kehuaddress);
+                bundle.putSerializable("kehuremark", kehuremark);
+                bundle.putSerializable("uuid", uuid);
+                IntentUtil.intentToNull(OrderSaveActivity.this, UpdateInfoActivity.class, bundle);
+                break;
+            case R.id.new_title_share:
+                Bundle bundles = new Bundle();
+                bundles.putSerializable("uuid", uuid);
+                bundles.putSerializable("type", 0);
+                bundles.putSerializable("staffUuid", staffUuid);
+                IntentUtil.intentToNull(OrderSaveActivity.this, ShareOrderActivity.class, bundles);
                 break;
         }
     }

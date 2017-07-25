@@ -3,7 +3,7 @@ package com.qijukeji.view.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,6 +35,7 @@ import com.qijukeji.view.OrderSaveActivity;
 import com.zxing.android.CaptureActivity;
 import com.zxing.android.PenreadActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -80,9 +81,10 @@ public class FirstFragment extends Fragment {
      * type = 2 是成单顾客
      */
     private int type = 1;
-    List<Object> list;
+    List<CheckOrder> list;
     private Context context;
     private String getkehumark;
+    private Bitmap bitmap;
 
     public interface FirstFragmentClickListener {
         void FirstFragmentBtnClick(boolean upDown);
@@ -138,6 +140,17 @@ public class FirstFragment extends Fragment {
         handler.removeCallbacksAndMessages(null);
     }
 
+    Handler handlers = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    setAdapter();
+                    break;
+            }
+        }
+    };
 
     Handler handler = new Handler() {
         @Override
@@ -191,6 +204,41 @@ public class FirstFragment extends Fragment {
      *
      * @param data
      */
+    private void getWXheadimg(String data) {
+        try {
+            JSONObject jsons = new JSONObject(data);
+            list = new ArrayList<>();
+            final JSONArray jsonbitmap = jsons.getJSONArray("list");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < jsonbitmap.length(); i++) {
+                        try {
+                            JSONObject jsonObject = (JSONObject) jsonbitmap.get(i);
+                            bitmap = Utils.returnBitmap(jsonObject.getString("userHeadImageUrl"));
+                            String uuid = jsonObject.getString("uuid");
+                            String userPhone = jsonObject.getString("userPhone");
+                            String userName = jsonObject.getString("userName");
+                            String userAddressVillage = jsonObject.getString("userAddressVillage");
+                            String userAddressUnit = jsonObject.getString("userAddressUnit");
+                            String source = jsonObject.getString("source");
+                            Integer status = jsonObject.getInt("status");
+                            String updateTime = jsonObject.getString("updateTime");
+                            String justGift = jsonObject.getString("justGift");
+                            CheckOrder checkOrder = new CheckOrder(uuid, userPhone, userName, userAddressVillage, userAddressUnit, source, status, updateTime, bitmap, justGift);
+                            list.add(checkOrder);
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                    handlers.sendEmptyMessage(0);
+                }
+            }).start();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     private void analysisJsonArrayYx(String data, Class<?> text) {
         try {
             JSONObject jsons = new JSONObject(data);
@@ -202,8 +250,7 @@ public class FirstFragment extends Fragment {
                 img_nodata.setVisibility(View.GONE);
                 order_ll.setBackgroundResource(R.color.white);
             }
-            List<Object> listObj = JsonToObjUtil.jsonArrayToListObj(kehulist, text);
-            setAdapter(listObj);
+            getWXheadimg(data);
         } catch (JSONException e1) {
             e1.printStackTrace();
         }
@@ -217,8 +264,7 @@ public class FirstFragment extends Fragment {
             if (kehulist.equals("[]")) {
                 page1--;
             } else {
-                List<Object> listObj = JsonToObjUtil.jsonArrayToListObj(kehulist, text);
-                setAdapter(listObj);
+                getWXheadimg(data);
             }
         } catch (JSONException e1) {
             e1.printStackTrace();
@@ -236,8 +282,7 @@ public class FirstFragment extends Fragment {
                 img_nodata.setVisibility(View.GONE);
                 order_ll.setBackgroundResource(R.color.white);
             }
-            List<Object> listObj = JsonToObjUtil.jsonArrayToListObj(kehulist, text);
-            setAdapter(listObj);
+            getWXheadimg(data);
         } catch (JSONException e1) {
             e1.printStackTrace();
         }
@@ -251,8 +296,7 @@ public class FirstFragment extends Fragment {
             if (kehulist.equals("[]")) {
                 page2--;
             } else {
-                List<Object> listObj = JsonToObjUtil.jsonArrayToListObj(kehulist, text);
-                setAdapter(listObj);
+                getWXheadimg(data);
             }
         } catch (JSONException e1) {
             e1.printStackTrace();
@@ -262,13 +306,9 @@ public class FirstFragment extends Fragment {
 
     /**
      * list显示
-     *
-     * @param listObj
      */
-    private void setAdapter(List<Object> listObj) {
-        list = new ArrayList<>();
-        list = listObj;
-        mainAdapter = new MainAdapter(list, context, type, staffid, staffUuid, brandid, handler, e);
+    private void setAdapter() {
+        mainAdapter = new MainAdapter(list, context, type, staffUuid);
         homeList.setAdapter(mainAdapter);
     }
 
@@ -349,7 +389,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                CheckOrder c = (CheckOrder) list.get(position - 1);
+                CheckOrder c = list.get(position - 1);
                 bundle.putSerializable(StaticField.KEY, key2);
                 bundle.putSerializable("uuid", c.getUuid());
                 bundle.putSerializable("source", c.getSource());

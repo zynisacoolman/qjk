@@ -2,11 +2,8 @@ package com.qijukeji.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,12 +12,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.qijukeji.customView.CircleImageView;
 import com.qijukeji.entityModel.CheckOrder;
 import com.qijukeji.qiju_dg.R;
-import com.qijukeji.utils.EvaluateUtils;
 import com.qijukeji.utils.IntentUtil;
-import com.qijukeji.utils.Utils;
 import com.qijukeji.view.ShareOrderActivity;
 
 import java.util.List;
@@ -31,37 +26,17 @@ import java.util.List;
  */
 
 public class MainAdapter extends BaseAdapter {
-    private List<Object> list;
+    private List<CheckOrder> list;
     private Context context;
     private int type;
-    private String staffid, staffUuid, brandid;
-    private Handler handler;
-    private EvaluateUtils e;
+    private String staffUuid;
     HomeAdapter homeAdapter;
-    Bitmap bitmap = null;
 
-    Handler handlers = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    homeAdapter.img_list_wxpicture.setImageBitmap(bitmap);
-                    break;
-            }
-        }
-    };
-
-    public MainAdapter(List<Object> list, Context context, int type, String staffid, String staffUuid, String brandid, Handler handler, EvaluateUtils e) {
+    public MainAdapter(List<CheckOrder> list, Context context, int type, String staffUuid) {
         this.list = list;
         this.context = context;
         this.type = type;
-        this.staffid = staffid;
         this.staffUuid = staffUuid;
-        this.brandid = brandid;
-        this.e = e;
-        this.handler = handler;
-
     }
 
 
@@ -83,7 +58,7 @@ public class MainAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = null;
-        final CheckOrder checkorder = (CheckOrder) list.get(position);
+        final CheckOrder checkorder = list.get(position);
         if (convertView == null) {
             view = View.inflate(context, R.layout.adapter_main_list, null);
         } else {
@@ -92,7 +67,7 @@ public class MainAdapter extends BaseAdapter {
         }
         homeAdapter = new HomeAdapter();
         homeAdapter.img_list_mark = (ImageView) view.findViewById(R.id.img_list_mark);
-        homeAdapter.img_list_wxpicture = (ImageView) view.findViewById(R.id.img_list_wxpicture);
+        homeAdapter.img_list_wxpicture = (CircleImageView) view.findViewById(R.id.img_list_wxpicture);
         homeAdapter.tv_order_name = (TextView) view.findViewById(R.id.tv_order_name);
         homeAdapter.tv_order_address = (TextView) view.findViewById(R.id.tv_order_address);
         homeAdapter.tv_time_label = (TextView) view.findViewById(R.id.tv_time_label);
@@ -102,9 +77,11 @@ public class MainAdapter extends BaseAdapter {
         homeAdapter.order_bt_move = (LinearLayout) view.findViewById(R.id.order_bt_move);
         homeAdapter.tv_order_name.setText(checkorder.getUserName());
         if (checkorder.getJustGift().equals("true")) {
+            homeAdapter.order_bt_share.setVisibility(View.GONE);
             homeAdapter.img_list_mark.setVisibility(View.VISIBLE);
             homeAdapter.img_list_mark.setBackgroundResource(R.drawable.gift_label);
         } else {
+            homeAdapter.order_bt_share.setVisibility(View.VISIBLE);
             if (checkorder.getSource() == null || checkorder.getSource().equals("")) {
                 homeAdapter.img_list_mark.setVisibility(View.GONE);
             } else {
@@ -117,13 +94,7 @@ public class MainAdapter extends BaseAdapter {
         } else {
             homeAdapter.order_bt_move.setVisibility(View.GONE);
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                bitmap = Utils.returnBitmap(checkorder.getUserHeadImageUrl());
-                handlers.sendEmptyMessage(0);
-            }
-        }).start();
+        homeAdapter.img_list_wxpicture.setImageBitmap(checkorder.getWxHeadpic());
         homeAdapter.tv_order_address.setText(checkorder.getUserAddressVillage() + checkorder.getUserAddressUnit());
         homeAdapter.tv_time_label.setText("获取时间");
         homeAdapter.tv_order_time.setText(checkorder.getUpdateTime());
@@ -161,77 +132,9 @@ public class MainAdapter extends BaseAdapter {
 
     class HomeAdapter {
         private TextView tv_order_name, tv_order_address, tv_time_label, tv_order_time;
-        private ImageView img_list_mark, img_list_wxpicture;
+        private ImageView img_list_mark;
+        private CircleImageView img_list_wxpicture;
         private ImageButton img_call_phone;
         private LinearLayout order_bt_share, order_bt_move;
-//        private PopupWindowHelper popwindows;
-//        private View popView;
-//        private TextView tv_share_kehu, tv_delete_kehu, tv_move_kehu;
-
-        private HomeAdapter() {
-        }
-
-//        private void initPop() {
-//            popView = LayoutInflater.from(context).inflate(R.layout.popwindows, null);
-//            popwindows = new PopupWindowHelper(popView);
-//            tv_share_kehu = (TextView) popView.findViewById(R.id.tv_share_kehu);
-//            tv_delete_kehu = (TextView) popView.findViewById(R.id.tv_delete_kehu);
-//            tv_move_kehu = (TextView) popView.findViewById(R.id.tv_move_kehu);
-//        }
-//
-//        public void tvOnClick(final String uuid) {
-//            tv_share_kehu.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("uuid", uuid);
-//                    bundle.putSerializable("type", 0);
-//                    bundle.putSerializable("staffUuid", staffUuid);
-//                    IntentUtil.intentToNull(context, ShareOrderActivity.class, bundle);
-//                    popwindows.dismiss();
-//                }
-//            });
-//            tv_delete_kehu.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                    builder.setTitle("删除订单").setMessage("确定删除该客户信息吗？");
-//                    builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                        }
-//                    }).setNegativeButton("确定", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            JSONObject json = new JSONObject();
-//                            try {
-//                                json.put("uuid", uuid);
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                            HttpUtil.VolleyHttpPost(context, ConstantValues.HTTP_HIDDENORDER + "?staffuuid=" + staffUuid + "&staffid=", staffid, json, null, 1);
-//                            Bundle b = new Bundle();
-//                            b.putSerializable("staffid", staffid);
-//                            b.putSerializable("staffUuid", staffUuid);
-//                            b.putSerializable("brandid", brandid);
-//                            IntentUtil.intentToNull(context, ThemeActivity.class, b);
-//                        }
-//                    }).setCancelable(false).show();
-//                    popwindows.dismiss();
-//                }
-//            });
-//            tv_move_kehu.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("uuid", uuid);
-//                    bundle.putSerializable("type", 1);
-//                    bundle.putSerializable("staffUuid", staffUuid);
-//                    IntentUtil.intentToNull(context, ShareOrderActivity.class, bundle);
-//                    popwindows.dismiss();
-//                }
-//            });
-//        }
-
     }
 }

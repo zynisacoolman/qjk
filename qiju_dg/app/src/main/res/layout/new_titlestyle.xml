@@ -21,9 +21,29 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/title_name"
-        android:textColor="@color/white"
         android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/new_title_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingBottom="12dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="8dp"
+        android:paddingTop="12dp"
+        android:src="@drawable/edit2_icon"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/new_title_share"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="15dp"
+        android:paddingTop="12dp"
+        android:src="@drawable/share2_icon"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/new_title_right"

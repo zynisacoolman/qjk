@@ -137,6 +137,7 @@ public class ThemeActivity extends FragmentActivity implements FirstFragment.Fir
                 Clockable = false;
                 break;
             case R.id.id_read_ll:
+                iv_title_write.setVisibility(View.GONE);
                 iv_title_right.setVisibility(View.GONE);
                 iv_title_back.setVisibility(View.GONE);
                 select_title_show.setVisibility(View.GONE);
@@ -146,6 +147,7 @@ public class ThemeActivity extends FragmentActivity implements FirstFragment.Fir
                 Clockable = true;
                 break;
             case R.id.id_va_ll:
+                iv_title_write.setVisibility(View.GONE);
                 iv_title_right.setVisibility(View.GONE);
                 iv_title_back.setVisibility(View.GONE);
                 select_title_show.setVisibility(View.GONE);
