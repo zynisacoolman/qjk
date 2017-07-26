@@ -100,6 +100,7 @@ public class OrderSaveActivity extends AppCompatActivity {
     private List<UserGift> listGift;
     private PopupWindowHelper popwindows;
     private View popView;
+    private String bitmapstr;
     private String staffid, staffUuid, uuid, isGift;
     private String kehuname, kehuphone, kehuxiaoqu, kehuaddress, kehuremark;
     private Bitmap bitmap;
@@ -140,6 +141,8 @@ public class OrderSaveActivity extends AppCompatActivity {
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("uuid", uuid);
                             bundle.putSerializable("data", data);
+                            bundle.putSerializable("bitmap", bitmapstr);
+                            bundle.putSerializable("kehuname", kehuname);
                             IntentUtil.intentToNull(OrderSaveActivity.this, OrderNextActivity.class, bundle);
                         }
                     } catch (JSONException e) {
@@ -176,15 +179,12 @@ public class OrderSaveActivity extends AppCompatActivity {
             JSONObject json = new JSONObject(data);
             final JSONObject info = json.getJSONObject("data");
             uuid = info.getString("checkOrderUuid");
+            bitmapstr = info.getString("userHeadImageUrl");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        bitmap = Utils.returnBitmap(info.getString("userHeadImageUrl"));
-                        handlers.sendEmptyMessage(0);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    bitmap = Utils.returnBitmap(bitmapstr);
+                    handlers.sendEmptyMessage(0);
                 }
             }).start();
             kehuname = info.getString("userName");
@@ -241,15 +241,12 @@ public class OrderSaveActivity extends AppCompatActivity {
             final JSONObject info = json.getJSONObject("data");
             uuid = info.getString("checkOrderUuid");
             int status = info.getInt("checkOrderStatus");
+            bitmapstr = info.getString("userHeadImageUrl");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        bitmap = Utils.returnBitmap(info.getString("userHeadImageUrl"));
-                        handlers.sendEmptyMessage(0);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    bitmap = Utils.returnBitmap(bitmapstr);
+                    handlers.sendEmptyMessage(0);
                 }
             }).start();
             kehuname = info.getString("userName");

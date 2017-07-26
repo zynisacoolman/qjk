@@ -3,6 +3,7 @@ package com.qijukeji.view;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.qijukeji.adapter.SendgiftAdapter;
+import com.qijukeji.customView.CircleImageView;
 import com.qijukeji.entityModel.UserGift;
 import com.qijukeji.qiju_dg.R;
 import com.qijukeji.utils.ConstantValues;
@@ -57,13 +59,28 @@ public class OrderNextActivity extends AppCompatActivity {
     TextView newsTitleName;
     @Bind(R.id.news_title_right)
     ImageView newsTitleRight;
+    @Bind(R.id._next_wxheadimg)
+    CircleImageView NextWxheadimg;
+    @Bind(R.id.title_kehu_name)
+    TextView titleKehuName;
     private List<UserGift> listGift;
     private JSONArray giftlist;
     private SendgiftAdapter sendgiftAdapter;
     private String staffid, staffUuid, uuid;
     private String discountAmount;
+    private Bitmap bitmap;
     private static final int HTTP_OVER_ORDERINFO = 1;
-
+    Handler handlers = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    NextWxheadimg.setImageBitmap(bitmap);
+                    break;
+            }
+        }
+    };
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -96,6 +113,8 @@ public class OrderNextActivity extends AppCompatActivity {
         Intent intent = getIntent();
         uuid = intent.getStringExtra("uuid");
         String data = intent.getStringExtra("data");
+        String kehuname = intent.getStringExtra("kehuname");
+        final String bitmapstr = intent.getStringExtra("bitmap");
         try {
             JSONObject jsonnext = new JSONObject(data);
             JSONObject info = jsonnext.getJSONObject("data");
@@ -104,7 +123,15 @@ public class OrderNextActivity extends AppCompatActivity {
             tvNextTotalmoney.setText(info.getString("totalAmount"));
             discountAmount = info.getString("discountAmount");
             tvFanxian.setText(discountAmount + "元");
+            titleKehuName.setText(kehuname);
             listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    bitmap = Utils.returnBitmap(bitmapstr);
+                    handlers.sendEmptyMessage(0);
+                }
+            }).start();
         } catch (JSONException e) {
             e.printStackTrace();
         }

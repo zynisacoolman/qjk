@@ -82,7 +82,7 @@ public class MainAdapter extends BaseAdapter {
             homeAdapter.img_list_mark.setBackgroundResource(R.drawable.gift_label);
         } else {
             homeAdapter.order_bt_share.setVisibility(View.VISIBLE);
-            if (checkorder.getSource() == null || checkorder.getSource().equals("")) {
+            if (checkorder.getSource() == null || checkorder.getSource().equals("1")) {
                 homeAdapter.img_list_mark.setVisibility(View.GONE);
             } else {
                 homeAdapter.img_list_mark.setVisibility(View.VISIBLE);
