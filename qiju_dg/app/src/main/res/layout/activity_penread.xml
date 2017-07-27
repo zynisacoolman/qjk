@@ -32,18 +32,35 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:background="@null"
             android:hint="请输入优惠码"
             android:inputType="number"
             android:padding="10dp" />
 
-        <Button
-            android:id="@+id/bt_yhm_commit"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/gray_line" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
-            android:background="@drawable/confirm_button"
-            android:text="提交"
-            android:textSize="18sp" />
+            android:background="@drawable/confirm_button">
+
+            <Button
+                android:id="@+id/bt_yhm_commit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:background="#00000000"
+                android:text="提交"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

@@ -58,7 +58,7 @@ public class PopupWindowHelper {
     public void showAsDropDown(View anchor, int xoff, int yoff) {
         popupView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int height = popupView.getMeasuredHeight();
-        mPopupWindow.showAsDropDown(anchor, xoff, 0);
+        mPopupWindow.showAsDropDown(anchor, xoff, -66);
     }
 
     /**

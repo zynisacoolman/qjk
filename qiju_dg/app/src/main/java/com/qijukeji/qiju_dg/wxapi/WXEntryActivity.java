@@ -99,10 +99,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 //发送成功
-                SendAuth.Resp sendResp = (SendAuth.Resp) resp;
-                if (sendResp != null) {
-                    String code = sendResp.token;
-                    getAccess_token(code);
+                SharedPreferences preferences = getSharedPreferences("qiju", Context.MODE_PRIVATE);
+                String hasErrors = preferences.getString("hasErrors", "");
+                if (hasErrors.equals("true")) {
+                    SendAuth.Resp sendResp = (SendAuth.Resp) resp;
+                    if (sendResp != null) {
+                        String code = sendResp.token;
+                        getAccess_token(code);
+                    }
                 }
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:

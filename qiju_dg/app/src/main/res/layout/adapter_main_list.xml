@@ -14,21 +14,21 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:layout_width="82dp"
-                android:layout_height="82dp"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
                 android:layout_marginBottom="13.4dp"
                 android:layout_marginRight="14dp">
 
                 <ImageView
                     android:id="@+id/img_list_mark"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:visibility="gone" />
 
                 <com.qijukeji.customView.CircleImageView
                     android:id="@+id/img_list_wxpicture"
-                    android:layout_width="62dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
                     android:layout_marginLeft="18dp"
                     android:layout_marginTop="19.4dp"
                     android:src="@drawable/tubiao" />
@@ -48,16 +48,16 @@
                     android:layout_marginTop="20dp"
                     android:text="薛之谦"
                     android:textColor="#303030"
-                    android:textSize="21sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/tv_order_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="6dp"
                     android:text="石家庄市怀特商业广场C座2005"
                     android:textColor="#303030"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -66,7 +66,6 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="25.4dp"
             android:layout_marginRight="18.7dp"
             android:layout_marginTop="28.4dp"
             android:background="@drawable/phone_icon" />
@@ -96,7 +95,7 @@
                 android:layout_marginRight="14dp"
                 android:text="获取时间"
                 android:textColor="@color/gary"
-                android:textSize="16sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tv_order_time"
@@ -104,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:text="2017-07-15"
                 android:textColor="@color/gary"
-                android:textSize="16sp" />
+                android:textSize="13sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -132,7 +131,7 @@
                     android:paddingRight="10dp"
                     android:text="转移"
                     android:textColor="#8d8d8d"
-                    android:textSize="16sp" />
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
@@ -157,7 +156,7 @@
                     android:paddingRight="10dp"
                     android:text="分享"
                     android:textColor="#8d8d8d"
-                    android:textSize="16sp" />
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
