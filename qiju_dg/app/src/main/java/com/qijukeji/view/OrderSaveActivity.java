@@ -96,6 +96,8 @@ public class OrderSaveActivity extends AppCompatActivity {
     ImageView newTitleShare;
     @Bind(R.id.ll_activity_show)
     LinearLayout llActivityShow;
+    @Bind(R.id.ll_total_edits)
+    LinearLayout llTotalEdits;
     private SendgiftAdapter sendgiftAdapter;
     private List<UserGift> listGift;
     private PopupWindowHelper popwindows;
