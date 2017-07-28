@@ -95,7 +95,11 @@ public class MainAdapter extends BaseAdapter {
             homeAdapter.order_bt_move.setVisibility(View.GONE);
         }
         homeAdapter.img_list_wxpicture.setImageBitmap(checkorder.getWxHeadpic());
-        homeAdapter.tv_order_address.setText(checkorder.getUserAddressVillage() + checkorder.getUserAddressUnit());
+        String addressUnit = checkorder.getUserAddressUnit();
+        if (addressUnit.equals("null")) {
+            addressUnit = "";
+        }
+        homeAdapter.tv_order_address.setText(checkorder.getUserAddressVillage() + addressUnit);
         homeAdapter.tv_time_label.setText("获取时间");
         homeAdapter.tv_order_time.setText(checkorder.getUpdateTime());
         homeAdapter.img_call_phone.setOnClickListener(new View.OnClickListener() {

@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="6dp"
             android:layout_marginTop="10dp">
 
             <ImageView
@@ -64,7 +64,7 @@
                         style="@style/third_time_tv"
                         android:text="活动价格："
                         android:textColor="#8b8b8b"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/find_money"
@@ -111,7 +111,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="#ffefef">
+                android:background="#f6f6f6">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -138,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="16dp"
                     android:layout_marginLeft="6dp"
                     android:layout_toRightOf="@+id/tv_share_price"
                     android:src="@drawable/share_orange_icon" />

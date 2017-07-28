@@ -24,6 +24,12 @@ public class TimeUtil {
         return sDateFormat.format(new Date(time));
     }
 
+    public static String getFormatedDateTimes(String dateTime) {
+        long time = Long.parseLong(dateTime);
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return sDateFormat.format(new Date(time));
+    }
+
     //获取系统时间
     public static String getDate() {
         date = new Date();

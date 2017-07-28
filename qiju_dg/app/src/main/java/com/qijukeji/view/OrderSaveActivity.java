@@ -98,6 +98,10 @@ public class OrderSaveActivity extends AppCompatActivity {
     LinearLayout llActivityShow;
     @Bind(R.id.ll_total_edits)
     LinearLayout llTotalEdits;
+    @Bind(R.id.tv_order_mark)
+    TextView tvOrderMark;
+    @Bind(R.id.ll_order_mark)
+    LinearLayout llOrderMark;
     private SendgiftAdapter sendgiftAdapter;
     private List<UserGift> listGift;
     private PopupWindowHelper popwindows;
@@ -189,6 +193,8 @@ public class OrderSaveActivity extends AppCompatActivity {
                     handlers.sendEmptyMessage(0);
                 }
             }).start();
+            llMoneyView.setVisibility(View.VISIBLE);
+            llActivityShow.setVisibility(View.VISIBLE);
             kehuname = info.getString("userName");
             kehuxiaoqu = info.getString("userAddressVillage");
             kehuaddress = info.getString("userAddressUnit");
@@ -278,18 +284,24 @@ public class OrderSaveActivity extends AppCompatActivity {
                 activityTheme.setText(info.getString("activityName"));
             }
             if (status == 0) {
+                llMoneyView.setVisibility(View.VISIBLE);
                 rlMoneyView.setVisibility(View.GONE);
                 llOrderShow.setVisibility(View.GONE);
+                llActivityShow.setVisibility(View.VISIBLE);
             } else if (status == 1) {
                 String gift = info.getString("giftList");
                 if (isGift.equals("false")) {
                     newTitleShare.setVisibility(View.VISIBLE);
+                    llActivityShow.setVisibility(View.VISIBLE);
                     tvFirstTotalmoney.setText(info.getString("totalAmount"));
                     orderFanxian.setText(info.getString("discountAmount") + "元");
                 } else {
                     llFanxianShow.setVisibility(View.GONE);
                     newTitleShare.setVisibility(View.GONE);
-                    llActivityShow.setVisibility(View.GONE);
+                }
+                if (!info.getString("remark").equals("null") && !info.getString("remark").equals("")) {
+                    llOrderMark.setVisibility(View.VISIBLE);
+                    tvOrderMark.setText(info.getString("remark"));
                 }
                 listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class);
                 llMoneyView.setVisibility(View.GONE);

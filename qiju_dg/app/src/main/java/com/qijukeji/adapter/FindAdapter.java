@@ -87,8 +87,10 @@ public class FindAdapter extends BaseAdapter {
         holder.already_mark.setText("报名：" + numnow + "人");
         holder.over_yhq.setText("核券：" + numcheck + "人");
 //        int pernum = numnow / find_info.getUpperLimit();
-        final String startshow = TimeUtil.getFormatedDateTime(find_info.getStartShowTime());
-        final String endshow = TimeUtil.getFormatedDateTime(find_info.getEndShowTime());
+        final String startshows = TimeUtil.getFormatedDateTimes(find_info.getStartShowTime());
+        final String endshows = TimeUtil.getFormatedDateTimes(find_info.getEndShowTime());
+        String startshow = TimeUtil.getFormatedDateTime(find_info.getStartShowTime());
+        String endshow = TimeUtil.getFormatedDateTime(find_info.getEndShowTime());
         holder.find_theme.setText(find_info.getTitle());
         holder.find_time.setText(startshow + "-" + endshow);
         String price = "";
@@ -125,7 +127,7 @@ public class FindAdapter extends BaseAdapter {
                 } else {
                     int id = position;
                     find_info = (ActivityEM) data.get(id);
-                    UmengShareUtils.shareActionOpen(context, activity, staffid, find_info.getUuid(), find_info.getTitle(), find_info.getDescription(), find_info.getShareImage(), find_info.getCoverImage(), staffUuid, find_info.getUuid(), find_info.getShareReward(), startshow + "-" + endshow);
+                    UmengShareUtils.shareActionOpen(context, activity, staffid, find_info.getUuid(), find_info.getTitle(), find_info.getDescription(), find_info.getShareImage(), find_info.getCoverImage(), staffUuid, find_info.getUuid(), find_info.getShareReward(), startshows + "-" + endshows, find_info.getAddress());
                 }
             }
         });

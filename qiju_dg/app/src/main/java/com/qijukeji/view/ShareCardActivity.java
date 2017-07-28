@@ -90,10 +90,10 @@ public class ShareCardActivity extends AppCompatActivity {
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
         uuid = intent.getStringExtra("uuid");
-        description = intent.getStringExtra("description");
+        description = intent.getStringExtra("canstore");
         time = intent.getStringExtra("time");
         imgcard = intent.getStringExtra("imgcard");
-        shareCardTitle.setText(title);
+        shareCardTitle.setText(description);
         shareCardDescription.setText(time);
         Glide.with(this)
                 .load(imgcard)

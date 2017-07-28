@@ -16,8 +16,7 @@
             <RelativeLayout
                 android:layout_width="76dp"
                 android:layout_height="76dp"
-                android:layout_marginBottom="13.4dp"
-                android:layout_marginRight="14dp">
+                android:layout_marginBottom="6dp">
 
                 <ImageView
                     android:id="@+id/img_list_mark"
@@ -27,8 +26,8 @@
 
                 <com.qijukeji.customView.CircleImageView
                     android:id="@+id/img_list_wxpicture"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginLeft="18dp"
                     android:layout_marginTop="19.4dp"
                     android:src="@drawable/tubiao" />
@@ -45,7 +44,7 @@
                     android:id="@+id/tv_order_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:text="薛之谦"
                     android:textColor="#303030"
                     android:textSize="20sp" />
@@ -67,7 +66,7 @@
             android:layout_height="32dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="18.7dp"
-            android:layout_marginTop="28.4dp"
+            android:layout_marginTop="26dp"
             android:background="@drawable/phone_icon" />
     </RelativeLayout>
 

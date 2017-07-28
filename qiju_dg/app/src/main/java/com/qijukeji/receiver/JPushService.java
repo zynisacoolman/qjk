@@ -21,53 +21,26 @@ import cn.jpush.android.api.TagAliasCallback;
 
 public class JPushService extends Service {
 
-    public static final int HTTP_JPUSH = 0;
-    private Context context;
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case HTTP_JPUSH:
-                    new Thread(new JPushService.JPush()).start();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
     @Override
     public void onCreate() {
         super.onCreate();
-        context = this;
-        handler.sendEmptyMessage(HTTP_JPUSH);
+        SharedPreferences preferences = getSharedPreferences("qiju", Context.MODE_PRIVATE);
+        String staffUuid = preferences.getString("staffUuid", "");
+        JPushInterface.setAlias(this, staffUuid, new TagAliasCallback() {
+            @Override
+            public void gotResult(int code, String s, Set<String> set) {
+                switch (code) {
+                    case 0:
+                        Log.e("pushinfo", "success");
+                        break;
+                }
+            }
+        });
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    class JPush implements Runnable {
-
-        @Override
-        public void run() {
-            SharedPreferences preferences = getSharedPreferences("qiju", Context.MODE_PRIVATE);
-            String staffUuid = preferences.getString("staffUuid", "");
-            JPushInterface.setAlias(context, staffUuid, new TagAliasCallback() {
-                @Override
-                public void gotResult(int code, String s, Set<String> set) {
-                    switch (code) {
-                        case 0:
-                            Log.e("pushinfo", "success");
-                            break;
-                    }
-                }
-            });
-//            handler.sendEmptyMessageDelayed(HTTP_JPUSH, 1000);
-        }
     }
 }

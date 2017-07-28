@@ -158,16 +158,16 @@ public class FirstFragment extends Fragment {
             String data = msg.obj.toString();
             switch (msg.what) {
                 case HTTP_INTENTION_ONE:
-                    analysisJsonArrayYx(data, CheckOrder.class);
+                    analysisJsonArrayYx(data);
                     break;
                 case HTTP_INTENTION:
-                    analysisJsonArrayYxs(data, CheckOrder.class);
+                    analysisJsonArrayYxs(data);
                     break;
                 case HTTP_FINISH_ONE:
-                    analysisJsonArrayCd(data, CheckOrder.class);
+                    analysisJsonArrayCd(data);
                     break;
                 case HTTP_FINISH:
-                    analysisJsonArrayCds(data, CheckOrder.class);
+                    analysisJsonArrayCds(data);
                     break;
                 case StaticField.MSGOGJ:
                     Utils.setToast(context, data);
@@ -239,7 +239,7 @@ public class FirstFragment extends Fragment {
         }
     }
 
-    private void analysisJsonArrayYx(String data, Class<?> text) {
+    private void analysisJsonArrayYx(String data) {
         try {
             JSONObject jsons = new JSONObject(data);
             String kehulist = jsons.getString("list");
@@ -256,7 +256,7 @@ public class FirstFragment extends Fragment {
         }
     }
 
-    private void analysisJsonArrayYxs(String data, Class<?> text) {
+    private void analysisJsonArrayYxs(String data) {
         onLoad();
         try {
             JSONObject jsons = new JSONObject(data);
@@ -264,6 +264,7 @@ public class FirstFragment extends Fragment {
             if (kehulist.equals("[]")) {
                 page1--;
             } else {
+                mainAdapter.notifyDataSetChanged();
                 getWXheadimg(data);
             }
         } catch (JSONException e1) {
@@ -271,7 +272,7 @@ public class FirstFragment extends Fragment {
         }
     }
 
-    private void analysisJsonArrayCd(String data, Class<?> text) {
+    private void analysisJsonArrayCd(String data) {
         try {
             JSONObject jsons = new JSONObject(data);
             String kehulist = jsons.getString("list");
@@ -288,7 +289,7 @@ public class FirstFragment extends Fragment {
         }
     }
 
-    private void analysisJsonArrayCds(String data, Class<?> text) {
+    private void analysisJsonArrayCds(String data) {
         onLoad();
         try {
             JSONObject jsons = new JSONObject(data);
@@ -296,6 +297,7 @@ public class FirstFragment extends Fragment {
             if (kehulist.equals("[]")) {
                 page2--;
             } else {
+                mainAdapter.notifyDataSetChanged();
                 getWXheadimg(data);
             }
         } catch (JSONException e1) {
