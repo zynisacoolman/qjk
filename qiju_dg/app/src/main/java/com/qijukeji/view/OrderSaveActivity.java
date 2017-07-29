@@ -82,14 +82,10 @@ public class OrderSaveActivity extends AppCompatActivity {
     ImageView newTitleRight;
     @Bind(R.id.title_newstyle)
     LinearLayout titleNewstyle;
-    @Bind(R.id.order_fanxian)
-    TextView orderFanxian;
     @Bind(R.id.order_zengping)
     ListView orderZengping;
     @Bind(R.id.ll_order_show)
     LinearLayout llOrderShow;
-    @Bind(R.id.ll_fanxian_show)
-    LinearLayout llFanxianShow;
     @Bind(R.id.new_title_edit)
     ImageView newTitleEdit;
     @Bind(R.id.new_title_share)
@@ -294,16 +290,15 @@ public class OrderSaveActivity extends AppCompatActivity {
                     newTitleShare.setVisibility(View.VISIBLE);
                     llActivityShow.setVisibility(View.VISIBLE);
                     tvFirstTotalmoney.setText(info.getString("totalAmount"));
-                    orderFanxian.setText(info.getString("discountAmount") + "元");
+                    listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class, info.getString("discountAmount") + "元");
                 } else {
-                    llFanxianShow.setVisibility(View.GONE);
                     newTitleShare.setVisibility(View.GONE);
+                    listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class, "0.00元");
                 }
                 if (!info.getString("remark").equals("null") && !info.getString("remark").equals("")) {
                     llOrderMark.setVisibility(View.VISIBLE);
                     tvOrderMark.setText(info.getString("remark"));
                 }
-                listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class);
                 llMoneyView.setVisibility(View.GONE);
                 newTitleEdit.setVisibility(View.VISIBLE);
                 newTitleRight.setVisibility(View.GONE);

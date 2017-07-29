@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.qijukeji.entityModel.UserGift;
@@ -49,7 +50,13 @@ public class SendgiftAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(
                     R.layout.fanxian_senditem, null);
             holder.tv_zengpin = (TextView) view.findViewById(R.id.tv_zengpin);
+            holder.fanxian_zengpin = (LinearLayout) view.findViewById(R.id.fanxian_zengpin);
             UserGift userGift = data.get(position);
+            if (!data.get(0).getTitle().equals("")) {
+                if (position < 1) {
+                    holder.fanxian_zengpin.setBackgroundResource(R.drawable.fanxian_bg);
+                }
+            }
             holder.tv_zengpin.setText(userGift.getTitle());
         } else {
             holder = (ViewHolder) view.getTag();
@@ -58,6 +65,7 @@ public class SendgiftAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
+        private LinearLayout fanxian_zengpin;
         private TextView tv_zengpin;
     }
 }

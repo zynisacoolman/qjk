@@ -43,8 +43,6 @@ public class OrderNextActivity extends AppCompatActivity {
 
     @Bind(R.id.lv_zengping)
     ListView lvZengping;
-    @Bind(R.id.tv_fanxian)
-    TextView tvFanxian;
     @Bind(R.id.bt_backstep)
     Button btBackstep;
     @Bind(R.id.bt_overorder)
@@ -122,9 +120,8 @@ public class OrderNextActivity extends AppCompatActivity {
             String gift = info.getString("giftList");
             tvNextTotalmoney.setText(info.getString("totalAmount"));
             discountAmount = info.getString("discountAmount");
-            tvFanxian.setText(discountAmount + "元");
             titleKehuName.setText(kehuname);
-            listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class);
+            listGift = JsonToObjUtil.jsonToListObj(gift, UserGift.class,discountAmount + "元");
             new Thread(new Runnable() {
                 @Override
                 public void run() {

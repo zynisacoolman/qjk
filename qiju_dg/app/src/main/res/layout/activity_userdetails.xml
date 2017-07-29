@@ -143,32 +143,6 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <LinearLayout
-                android:id="@+id/ll_fanxian_show"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginRight="18dp"
-                android:background="@drawable/fanxian_bg">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="4"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/order_fanxian"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
             <ListView
                 android:id="@+id/order_zengping"
                 android:layout_width="match_parent"

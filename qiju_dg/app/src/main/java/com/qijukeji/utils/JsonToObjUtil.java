@@ -43,11 +43,13 @@ public class JsonToObjUtil {
     }
 
     //礼品列表解析
-    public static List<UserGift> jsonToListObj(String gift, Class<?> text) {
+    public static List<UserGift> jsonToListObj(String gift, Class<?> text, String fanxian) {
         builder = new GsonBuilder();
         gson = builder.create();
         JSONObject json;
         List<UserGift> list = new ArrayList<>();
+        UserGift user = new UserGift(fanxian);
+        list.add(user);
         try {
             JSONArray jsonArray = new JSONArray(gift);
             for (int i = 0; i < jsonArray.length(); i++) {

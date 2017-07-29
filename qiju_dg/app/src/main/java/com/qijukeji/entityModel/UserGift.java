@@ -1,7 +1,5 @@
 package com.qijukeji.entityModel;
 
-import java.util.Date;
-
 /**
  * Created by songz on 6/21/2017.
  */
@@ -32,6 +30,10 @@ public class UserGift {
      * 剩余数量
      */
     private Integer leftCount;
+
+    public UserGift(String title) {
+        this.title = title;
+    }
 
     public String getUuid() {
         return uuid;
