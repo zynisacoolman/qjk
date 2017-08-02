@@ -85,17 +85,17 @@
             android:layout_height="34dp"
             android:orientation="horizontal">
 
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray_line" />
+
             <TextView
                 android:id="@+id/tv_intention"
                 style="@style/main_text"
                 android:background="@color/white"
                 android:text="意向顾客"
                 android:textColor="@color/colorPrimary" />
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/gray_line" />
 
             <TextView
                 android:id="@+id/tv_bargain"
@@ -110,16 +110,17 @@
             android:background="@color/gray_line" />
 
 
-        <com.qijukeji.customView.XListView
-            android:id="@+id/lv_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <ImageView
             android:id="@+id/img_nodata"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:src="@drawable/nodata" />
+
+        <com.qijukeji.customView.XListView
+            android:id="@+id/lv_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </LinearLayout>
