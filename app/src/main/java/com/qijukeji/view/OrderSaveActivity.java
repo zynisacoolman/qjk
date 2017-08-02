@@ -103,6 +103,7 @@ public class OrderSaveActivity extends AppCompatActivity {
     private PopupWindowHelper popwindows;
     private View popView;
     private String bitmapstr;
+    private Integer checkOrderState;
     private String staffid, staffUuid, uuid, isGift;
     private String kehuname, kehuphone, kehuxiaoqu, kehuaddress, kehuremark;
     private Bitmap bitmap;
@@ -244,7 +245,7 @@ public class OrderSaveActivity extends AppCompatActivity {
             JSONObject json = new JSONObject(data);
             final JSONObject info = json.getJSONObject("data");
             uuid = info.getString("checkOrderUuid");
-            int status = info.getInt("checkOrderStatus");
+            checkOrderState = info.getInt("checkOrderStatus");
             bitmapstr = info.getString("userHeadImageUrl");
             new Thread(new Runnable() {
                 @Override
@@ -279,12 +280,12 @@ public class OrderSaveActivity extends AppCompatActivity {
                         .into(activityImg);
                 activityTheme.setText(info.getString("activityName"));
             }
-            if (status == 0) {
+            if (checkOrderState == 0) {
                 llMoneyView.setVisibility(View.VISIBLE);
                 rlMoneyView.setVisibility(View.GONE);
                 llOrderShow.setVisibility(View.GONE);
                 llActivityShow.setVisibility(View.VISIBLE);
-            } else if (status == 1) {
+            } else if (checkOrderState == 1) {
                 String gift = info.getString("giftList");
                 if (isGift.equals("false")) {
                     newTitleShare.setVisibility(View.VISIBLE);
@@ -348,6 +349,7 @@ public class OrderSaveActivity extends AppCompatActivity {
                 bundle.putSerializable("kehuxiaoqu", kehuxiaoqu);
                 bundle.putSerializable("kehuaddress", kehuaddress);
                 bundle.putSerializable("kehuremark", kehuremark);
+                bundle.putSerializable("checkOrderState", checkOrderState);
                 bundle.putSerializable("uuid", uuid);
                 IntentUtil.intentToNull(OrderSaveActivity.this, UpdateInfoActivity.class, bundle);
                 break;
@@ -377,6 +379,7 @@ public class OrderSaveActivity extends AppCompatActivity {
                 bundle.putSerializable("kehuxiaoqu", kehuxiaoqu);
                 bundle.putSerializable("kehuaddress", kehuaddress);
                 bundle.putSerializable("kehuremark", kehuremark);
+                bundle.putSerializable("checkOrderState", checkOrderState);
                 bundle.putSerializable("uuid", uuid);
                 IntentUtil.intentToNull(OrderSaveActivity.this, UpdateInfoActivity.class, bundle);
                 popwindows.dismiss();

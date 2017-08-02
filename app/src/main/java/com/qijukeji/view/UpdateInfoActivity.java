@@ -33,6 +33,8 @@ import butterknife.OnClick;
  */
 
 public class UpdateInfoActivity extends AppCompatActivity {
+    @Bind(R.id.ll_user_info_part)
+    LinearLayout userInfoPart;
     @Bind(R.id.title_newstyle)
     LinearLayout titleNewstyle;
     @Bind(R.id.et_detail_name)
@@ -61,6 +63,7 @@ public class UpdateInfoActivity extends AppCompatActivity {
     @Bind(R.id.news_title_right)
     ImageView newsTitleRight;
     private String staffid, staffUuid, uuid;
+    private Integer checkOrderState;
     private String kehuname, kehuphone, kehuxiaoqu, kehuaddress, kehuremark;
     private static final int HTTP_SAVE_INFO = 1;
     Handler handler = new Handler() {
@@ -105,6 +108,10 @@ public class UpdateInfoActivity extends AppCompatActivity {
         kehuxiaoqu = intent.getStringExtra("kehuxiaoqu");
         kehuaddress = intent.getStringExtra("kehuaddress");
         kehuremark = intent.getStringExtra("kehuremark");
+        checkOrderState = intent.getIntExtra("checkOrderState",0);
+        if(checkOrderState==1){
+            userInfoPart.setVisibility(View.GONE);
+        }
         uuid = intent.getStringExtra("uuid");
         SharedPreferences preferences = getSharedPreferences("qiju", Context.MODE_PRIVATE);
         staffid = preferences.getString("staffid", "");
@@ -140,10 +147,12 @@ public class UpdateInfoActivity extends AppCompatActivity {
                 etDetailAddress.getText().toString();
                 etDetailRemarks.getText().toString();
                 try {
-                    json.put("userName", etDetailName.getText().toString());
-                    json.put("userPhone", etDetailPhone.getText().toString());
-                    json.put("addressVillage", etDetailAddressXq.getText().toString());
-                    json.put("addressUnit", etDetailAddress.getText().toString());
+                    if(checkOrderState==0){
+                        json.put("userName", etDetailName.getText().toString());
+                        json.put("userPhone", etDetailPhone.getText().toString());
+                        json.put("addressVillage", etDetailAddressXq.getText().toString());
+                        json.put("addressUnit", etDetailAddress.getText().toString());
+                    }
                     json.put("remark", etDetailRemarks.getText().toString());
                     json.put("uuid", uuid);
                     Log.e("jsonupdate", json.toString());
