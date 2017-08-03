@@ -66,7 +66,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.qijukeji.view.ActivityDetailActivity" />
         <!-- android:name="com.qijukeji.view.BlankPageActivity" -->
         <activity android:name="com.qijukeji.view.ThemeActivity" />
         <activity android:name="com.zxing.android.CaptureActivity" />
@@ -82,10 +81,6 @@
             android:name="com.qijukeji.view.DialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name="com.qijukeji.view.StatementActivity" />
-        <activity
-            android:name="com.qijukeji.view.UserDetailsActivity"
-            android:windowSoftInputMode="adjustPan" />
-
         <service android:name="com.qijukeji.receiver.UpdateService" />
         <!-- 高德地图 -->
         <service android:name="com.amap.api.location.APSService" />

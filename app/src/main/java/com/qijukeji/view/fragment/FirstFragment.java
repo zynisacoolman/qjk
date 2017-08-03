@@ -76,6 +76,7 @@ public class FirstFragment extends Fragment {
     private String staffUuid;
     private String brandid;
     private EvaluateUtils e;
+    private boolean requestFinished=true;
     /**
      * type = 1 是意向顾客
      * type = 2 是成单顾客
@@ -215,7 +216,9 @@ public class FirstFragment extends Fragment {
                     for (int i = 0; i < jsonbitmap.length(); i++) {
                         try {
                             JSONObject jsonObject = (JSONObject) jsonbitmap.get(i);
-                            bitmap = Utils.returnBitmap(jsonObject.getString("userHeadImageUrl"));
+
+                            String userHeadImageUrl = jsonObject.getString("userHeadImageUrl");
+                            //bitmap = Utils.returnBitmap(userHeadImageUrl);
                             String uuid = jsonObject.getString("uuid");
                             String userPhone = jsonObject.getString("userPhone");
                             String userName = jsonObject.getString("userName");
@@ -226,6 +229,7 @@ public class FirstFragment extends Fragment {
                             String updateTime = jsonObject.getString("updateTime");
                             String justGift = jsonObject.getString("justGift");
                             CheckOrder checkOrder = new CheckOrder(uuid, userPhone, userName, userAddressVillage, userAddressUnit, source, status, updateTime, bitmap, justGift);
+                            checkOrder.setUserHeadImageUrl(userHeadImageUrl);
                             list.add(checkOrder);
                         } catch (JSONException e1) {
                             e1.printStackTrace();
@@ -312,6 +316,7 @@ public class FirstFragment extends Fragment {
     private void setAdapter() {
         mainAdapter = new MainAdapter(list, context, type, staffUuid);
         homeList.setAdapter(mainAdapter);
+        requestFinished=true;
     }
 
     /**
@@ -402,21 +407,29 @@ public class FirstFragment extends Fragment {
         tv_intention.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                type = 1;
-                tv_intention.setTextColor(getResources().getColor(R.color.colorPrimary));
-                tv_bargain.setTextColor(getResources().getColor(R.color.black_text));
-                page1 = 0;
-                toIntentionHttp(HTTP_INTENTION_ONE, page1);
+                if(requestFinished){
+                    type = 1;
+                    tv_intention.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    tv_bargain.setTextColor(getResources().getColor(R.color.black_text));
+                    page1 = 0;
+                    requestFinished=false;
+                    toIntentionHttp(HTTP_INTENTION_ONE, page1);
+                }
+
             }
         });
         tv_bargain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                type = 2;
-                tv_bargain.setTextColor(getResources().getColor(R.color.colorPrimary));
-                tv_intention.setTextColor(getResources().getColor(R.color.black_text));
-                page2 = 0;
-                toFinishHttp(HTTP_FINISH_ONE, page2);
+                if(requestFinished){
+                    type = 2;
+                    tv_bargain.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    tv_intention.setTextColor(getResources().getColor(R.color.black_text));
+                    page2 = 0;
+                    requestFinished=false;
+                    toFinishHttp(HTTP_FINISH_ONE, page2);
+                }
+
             }
         });
         img_scan.setOnClickListener(new View.OnClickListener() {
@@ -463,7 +476,7 @@ public class FirstFragment extends Fragment {
     }
 
     private void lineAnimation(ImageView img_view) {
-        Animation animation = new TranslateAnimation(0, 0, -45, 25);
+        Animation animation = new TranslateAnimation(0, 0, -45, 20);
         animation.setDuration(2000);//设置动画持续时间
         animation.setRepeatMode(Animation.RESTART);//重复模式
         animation.setRepeatCount(Animation.INFINITE);//设置次数

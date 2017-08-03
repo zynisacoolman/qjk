@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qijukeji.customView.CircleImageView;
 import com.qijukeji.entityModel.CheckOrder;
 import com.qijukeji.qiju_dg.R;
@@ -67,7 +68,13 @@ public class MainAdapter extends BaseAdapter {
         }
         homeAdapter = new HomeAdapter();
         homeAdapter.img_list_mark = (ImageView) view.findViewById(R.id.img_list_mark);
-        homeAdapter.img_list_wxpicture = (CircleImageView) view.findViewById(R.id.img_list_wxpicture);
+        //homeAdapter.img_list_wxpicture = (CircleImageView) view.findViewById(R.id.img_list_wxpicture);
+
+        homeAdapter.img_list_wxpicture = (ImageView) view.findViewById(R.id.img_list_wxpicture);
+
+
+
+
         homeAdapter.tv_order_name = (TextView) view.findViewById(R.id.tv_order_name);
         homeAdapter.tv_order_address = (TextView) view.findViewById(R.id.tv_order_address);
         homeAdapter.tv_time_label = (TextView) view.findViewById(R.id.tv_time_label);
@@ -94,7 +101,16 @@ public class MainAdapter extends BaseAdapter {
         } else {
             homeAdapter.order_bt_move.setVisibility(View.GONE);
         }
-        homeAdapter.img_list_wxpicture.setImageBitmap(checkorder.getWxHeadpic());
+
+        Glide.with(context)
+                .load(checkorder.getUserHeadImageUrl())
+                .placeholder(R.drawable.tubiao)
+                .error(R.drawable.tubiao)
+                .into(homeAdapter.img_list_wxpicture);
+        //homeAdapter.img_list_wxpicture.setImageBitmap(checkorder.getWxHeadpic());
+
+
+
         String addressUnit = checkorder.getUserAddressUnit();
         if (addressUnit.equals("null")) {
             addressUnit = "";
@@ -137,7 +153,8 @@ public class MainAdapter extends BaseAdapter {
     class HomeAdapter {
         private TextView tv_order_name, tv_order_address, tv_time_label, tv_order_time;
         private ImageView img_list_mark;
-        private CircleImageView img_list_wxpicture;
+//        private CircleImageView img_list_wxpicture;
+        private ImageView img_list_wxpicture;
         private ImageButton img_call_phone;
         private LinearLayout order_bt_share, order_bt_move;
     }

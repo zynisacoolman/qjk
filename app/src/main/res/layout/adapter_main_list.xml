@@ -24,7 +24,14 @@
                     android:layout_height="28dp"
                     android:visibility="gone" />
 
-                <com.qijukeji.customView.CircleImageView
+                <!--<com.qijukeji.customView.CircleImageView-->
+                    <!--android:id="@+id/img_list_wxpicture"-->
+                    <!--android:layout_width="48dp"-->
+                    <!--android:layout_height="48dp"-->
+                    <!--android:layout_marginLeft="18dp"-->
+                    <!--android:layout_marginTop="19.4dp"-->
+                    <!--android:src="@drawable/tubiao" />-->
+                <ImageView
                     android:id="@+id/img_list_wxpicture"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
