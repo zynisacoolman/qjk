@@ -104,8 +104,8 @@ public class FindAdapter extends BaseAdapter {
         holder.find_address.setText("适用" + find_info.getAddress());
         Glide.with(context)
                 .load(find_info.getShareImage())
-                .placeholder(R.drawable.logo)
-                .error(R.drawable.logo)
+                .placeholder(R.drawable.icon_orange)
+                .error(R.drawable.icon_orange)
                 .into(holder.find_img);
 
         holder.find_rl.setOnClickListener(new View.OnClickListener() {

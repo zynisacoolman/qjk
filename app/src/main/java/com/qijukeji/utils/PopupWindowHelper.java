@@ -47,18 +47,18 @@ public class PopupWindowHelper {
 
     public void showAsDropDown(View anchor) {
         initPopupWindow(TYPE_WRAP_CONTENT);
-        mPopupWindow.setAnimationStyle(R.style.AnimationUpPopup);
+        mPopupWindow.setAnimationStyle(R.style.AnimationDownPopup);
         if (mPopupWindow.isShowing()) {
             mPopupWindow.dismiss();
         } else {
-            showAsDropDown(anchor, 0, 0);
+            showAsDropDown(anchor, -10, -30);
         }
     }
 
     public void showAsDropDown(View anchor, int xoff, int yoff) {
         popupView.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int height = popupView.getMeasuredHeight();
-        mPopupWindow.showAsDropDown(anchor, xoff, -66);
+        mPopupWindow.showAsDropDown(anchor, xoff, yoff);
     }
 
     /**

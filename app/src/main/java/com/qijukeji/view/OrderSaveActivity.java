@@ -274,7 +274,8 @@ public class OrderSaveActivity extends AppCompatActivity {
             tvKehuPhone.setText(kehuphone);
             if (isGift.equals("false")) {
                 Glide.with(this)
-                        .load(info.getString("activityShareImage"))
+                        //.load(info.getString("activityShareImage"))
+                        .load(info.getString("activityCoverImage"))
                         .placeholder(R.drawable.tubiao)
                         .error(R.drawable.tubiao)
                         .into(activityImg);

@@ -36,6 +36,7 @@ import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
 public class RegisterActivity extends AppCompatActivity {
+    @SuppressWarnings("ResourceType")
     @Bind(R.id.brand_spinner)
     Spinner brand_spinner;
     @Bind(R.id.storelist_spinner)
@@ -92,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
         toHttpPltext(null);
     }
 
+    @SuppressWarnings("ResourceType")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @OnItemSelected(R.id.brand_spinner)
     public void onItemSelected(AdapterView<?> parent, View view,

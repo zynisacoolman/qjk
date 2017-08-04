@@ -115,7 +115,7 @@
 
             <ImageView
                 android:id="@+id/activity_img"
-                android:layout_width="84dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"
@@ -126,6 +126,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:textSize="18sp"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:id="@+id/activity_theme"
                 android:textColor="#303030" />
             <!--<View android:layout_height="match_parent"-->
