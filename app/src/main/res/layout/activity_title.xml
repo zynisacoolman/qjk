@@ -84,7 +84,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="12dp"
-            android:src="@drawable/pen_icon"
+            android:src="@drawable/hand_icon"
             android:visibility="gone" />
 
         <ImageView

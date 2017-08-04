@@ -11,6 +11,7 @@
         android:layout_alignParentRight="true"
         android:layout_margin="18sp"
         android:layout_weight="1"
+        android:visibility="gone"
         android:background="@drawable/download_icon" />
 
     <LinearLayout
@@ -21,6 +22,8 @@
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
         android:layout_marginTop="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -30,23 +33,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitXY"
-            />
+            android:scaleType="fitXY"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="270dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/share_card_title"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:textColor="#303030"
                 android:textSize="16sp" />
@@ -54,63 +56,71 @@
             <TextView
                 android:id="@+id/share_card_description"
                 android:layout_width="wrap_content"
-                android:layout_height="13dp"
-                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:textColor="#8d8d8d"
-                android:textSize="9sp" />
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp">
+                android:layout_height="65dp"
+                android:gravity="right"
+                android:layout_marginTop="12dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"
+                    android:gravity="right"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="18dp"
+                        android:text="识别二维码参与活动"
+                        android:textColor="#303030"
+                        android:textSize="12sp" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginTop="2dp"
+                        android:text="分享自 悠哉悠宅"
+                        android:textColor="#666666"
+                        android:textSize="11sp" />
+                </LinearLayout>
                 <ImageView
                     android:id="@+id/img_share_scan"
                     android:layout_width="65dp"
                     android:layout_height="65dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:text="识别二维码参与活动"
-                    android:textColor="#303030"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="-107dp"
-                    android:text="分享自 悠哉悠宅！"
-                    android:textColor="#666666"
-                    android:textSize="11sp" />
-
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_sharecard_button"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="18dp">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
 
             <ImageButton
                 android:id="@+id/ll_card_wechat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
+                android:scaleType="fitCenter"
                 android:background="#00000000"
                 android:src="@drawable/wechat_icon" />
 
@@ -118,8 +128,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
                 android:text="微信好友"
+                android:padding="10dp"
                 android:textColor="@color/white" />
         </LinearLayout>
 
@@ -142,8 +152,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
                 android:text="朋友圈"
+                android:padding="10dp"
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
