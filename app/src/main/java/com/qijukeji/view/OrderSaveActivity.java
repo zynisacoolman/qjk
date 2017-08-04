@@ -82,8 +82,8 @@ public class OrderSaveActivity extends AppCompatActivity {
     ImageView newTitleRight;
     @Bind(R.id.title_newstyle)
     LinearLayout titleNewstyle;
-    @Bind(R.id.order_zengping)
-    ListView orderZengping;
+    @Bind(R.id.order_gifts)
+    ListView orderGifts;
     @Bind(R.id.ll_order_show)
     LinearLayout llOrderShow;
     @Bind(R.id.new_title_edit)
@@ -307,7 +307,7 @@ public class OrderSaveActivity extends AppCompatActivity {
                 btNextPage.setVisibility(View.GONE);
                 rlMoneyView.setVisibility(View.VISIBLE);
                 sendgiftAdapter = new SendgiftAdapter(listGift, this);
-                orderZengping.setAdapter(sendgiftAdapter);
+                orderGifts.setAdapter(sendgiftAdapter);
             }
         } catch (JSONException e) {
             e.printStackTrace();

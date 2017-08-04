@@ -6,6 +6,8 @@
 
     <com.qijukeji.customView.XListView
         android:id="@+id/lv_find"
+        android:divider="@null"
+        android:background="@color/background_gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
