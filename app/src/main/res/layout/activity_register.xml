@@ -20,13 +20,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="48dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:gravity="center"
                 android:layout_marginLeft="10dp">
 
                 <ImageView
@@ -38,28 +38,23 @@
                     android:id="@+id/reg_name"
                     style="@style/et_hint"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:hint="姓名" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="5dp"
-                android:background="@color/text_gray">
-
-            </View>
+            <View style="@style/line_style"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"/>
 
             <LinearLayout
                 android:id="@+id/rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="13dp">
+                android:gravity="center"
+                android:layout_marginLeft="10dp">
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -71,7 +66,7 @@
                     android:id="@+id/et_register_phone"
                     style="@style/et_hint"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
@@ -79,21 +74,16 @@
                     android:inputType="number" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="5dp"
-                android:background="@color/text_gray">
-
-            </View>
+            <View style="@style/line_style"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"/>
 
             <LinearLayout
                 android:id="@+id/rl_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="13dp">
+                android:gravity="center"
+                android:layout_marginLeft="10dp">
 
                 <ImageView
                     android:id="@+id/imageView4"
@@ -105,7 +95,7 @@
                     android:id="@+id/et_register_password"
                     style="@style/et_hint"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
@@ -114,20 +104,17 @@
                     android:inputType="textPassword" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="5dp"
-                android:background="@color/text_gray">
+            <View style="@style/line_style"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"/>
 
-            </View>
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="24dp">
 
             <LinearLayout
                 android:id="@+id/ll_brand_spinner"
